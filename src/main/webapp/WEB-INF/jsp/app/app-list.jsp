@@ -14,8 +14,9 @@
   <link href="../../static/hplus/css/animate.min.css" rel="stylesheet">
   <link href="../../static/hplus/css/style.min.css-v=4.0.0.css" rel="stylesheet">
   <link href="../../static/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
+  <link href="../../static/css/style.css" rel="stylesheet">
 </head>
-<body>
+<body class="gray-bg">
 <nav class="breadcrumb"><i class="fa fa-home"></i>
   首页 &gt; app管理 &gt; app列表
   <a class="btn btn-primary"
@@ -26,42 +27,43 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="ibox float-e-margins">
-        <div class="ibox-content">
+        <div class="ibox-title">
           <div class="form-inline">
             <div class="form-group">
               <select class="form-control" name="selectId" id="selectId">
                 <option value="1">名称</option>
               </select>
-              <input type="text" name="userName" id="userName" class="form-control">
+              <input type="text" name="keywords" id="keywords" class="form-control">
             </div>
             <button name="search" id="search" class="btn btn-success"><i
                     class="fa fa-search"></i>
               搜索
             </button>
           </div>
+          <br/>
 
           <div class="form-inline">
             <a class="btn btn-primary" onclick="addApp('添加管理员','/app/toAppAdd')" href="javascript:void(0);"><i class="fa fa-plus"></i> 添加app</a>
             <a href="javascript:void(0);" onclick="role_del()" class="btn btn-primary"><i class="fa fa-trash-o"></i> 批量删除</a>
           </div>
+        </div>
+        <div class="ibox-content">
+          <table id="oTable" class="table table-striped table-bordered table-hover dataTables-example">
+            <thead>
+            <tr>
+              <th width="25">
+                <input type="checkbox">
+              </th>
+              <th>名称</th>
+              <th>所属单位</th>
+              <th>审核状态</th>
+              <th>审核通过日期</th>
+              <th>审核人</th>
+              <th>添加时间</th>
+            </tr>
+            </thead>
+          </table>
 
-          <div id="editable_wrapper" class="dataTables_wrapper form-inline" role="grid">
-            <table id="oTable" class="table table-striped table-bordered table-hover  dataTable" aria-describedby="editable_info">
-              <thead>
-              <tr role="row">
-                <th width="25">
-                  <input type="checkbox">
-                </th>
-                <th>名称</th>
-                <th>所属单位</th>
-                <th>审核状态</th>
-                <th>审核通过日期</th>
-                <th>审核人</th>
-                <th>添加时间</th>
-              </tr>
-              </thead>
-            </table>
-          </div>
         </div>
       </div>
     </div>
@@ -71,6 +73,7 @@
 <script src="../../static/layer/layer.js"></script>
 <script src="../../static/datatables/js/jquery.dataTables.js"></script>
 <script src="../../static/datatables/js/dataTables.bootstrap.js"></script>
+<script src="../../static/js/public.js"></script>
 <script type="text/javascript">
   var oTable;
   $(document).ready(function () {
