@@ -1,0 +1,61 @@
+group 'com.eleapp'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'war'    //有这行时我们需要创建 src/main/webapp 目录
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    /*maven  {
+        url "http://repo.maven.apache.org/maven2/"
+    }*/
+    mavenCentral()
+}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+compileJava.options.encoding = 'UTF-8'
+
+dependencies {
+    compile fileTree(dir: 'lib', include: '*.jar')
+
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.2.RELEASE'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.2.RELEASE'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.16'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.39'
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.1'
+    compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.0'
+    compile group: 'com.github.pagehelper', name: 'pagehelper', version: '4.1.6'
+    compile group: 'com.github.jsqlparser', name: 'jsqlparser', version: '0.9.5'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.1'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+    compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.21'
+    compile group: 'com.alibaba', name: 'druid', version: '1.0.25'
+    compile group: 'org.tuckey', name: 'urlrewritefilter', version: '4.0.4'
+    compile group: 'com.google.guava', name: 'guava', version: '19.0'
+    compile group: 'javax.servlet.jsp.jstl', name: 'javax.servlet.jsp.jstl-api', version: '1.2.1'
+    compile group: 'org.apache.taglibs', name: 'taglibs-standard-impl', version: '1.2.5'
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.2'
+    compile group: 'commons-net', name: 'commons-net', version: '3.5'
+    compile group: 'net.sourceforge.htmlunit', name: 'htmlunit', version: '2.23'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.9.2'
+    compile group: 'org.jodd', name: 'jodd-core', version: '3.7.1'
+    compile group: 'org.jodd', name: 'jodd-lagarto', version: '3.7.1'
+    compile group: 'org.jodd', name: 'jodd-http', version: '3.7.1'
+    compile group: 'com.google.zxing', name: 'javase', version: '3.2.1'  /*google读取生成二维码*/
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.14'
+    /*compile 'com.qiniu:qiniu-java-sdk:7.1.+'*/ /*七牛相关*/
+
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    /*testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.2.RELEASE'*/
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "3.0"
+}

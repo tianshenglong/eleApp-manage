@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:property-placeholder location="classpath*:eleapp_test.properties"/>
+
+
+    <!-- 数据源配置, 使用 Druid 数据库连接池 -->
+    <bean id="mysqlDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <qualifier value="dataSource"/>
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${mysql.database.url}"/>
+        <property name="username" value="${mysql.database.user}"/>
+        <property name="password" value="${mysql.database.password}"/>
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="5"/>
+        <property name="minIdle" value="${mysql.database.minIdle}"/>
+        <property name="maxActive" value="${mysql.database.maxActive}"/>
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000"/>
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+
+        <property name="validationQuery" value="SELECT 1 FROM DUAL" />
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat"/>
+    </bean>
+
+    <!-- mybatis文件配置，扫描所有mapper文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="mysqlDataSource"/>
+        <property name="typeAliasesPackage" value="com.yiboshi.model"/>
+        <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
+        <!-- 自动扫描映射文件 -->
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:/mappers/*.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- spring与mybatis整合配置，扫描所有dao -->
+    <!-- 扫描basePackage下所有以@MyBatisRepository注解的接口-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.eleapp.dao"/>
+    </bean>
+
+
+    <!--&lt;!&ndash; 数据源配置, 使用 Druid 数据库连接池 &ndash;&gt;-->
+    <!--<bean id="sqlServerDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+        <!--<qualifier value="dataSource"/>-->
+        <!--&lt;!&ndash; 基本属性 url、user、password &ndash;&gt;-->
+        <!--<property name="url" value="${sqlServer.database.url}"/>-->
+        <!--<property name="username" value="${sqlServer.database.user}"/>-->
+        <!--<property name="password" value="${sqlServer.database.password}"/>-->
+
+        <!--&lt;!&ndash; 初始化连接数量 &ndash;&gt;-->
+        <!--<property name="initialSize" value="20" />-->
+        <!--&lt;!&ndash; 最大并发连接数 &ndash;&gt;-->
+        <!--<property name="maxActive" value="1000" />-->
+        <!--&lt;!&ndash; 最小空闲连接数 &ndash;&gt;-->
+        <!--<property name="minIdle" value="20" />-->
+        <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+        <!--<property name="maxWait" value="60000" />-->
+        <!--&lt;!&ndash; 超过时间限制是否回收 &ndash;&gt;-->
+        <!--<property name="removeAbandoned" value="true" />-->
+        <!--&lt;!&ndash; 超过时间限制多长； &ndash;&gt;-->
+        <!--<property name="removeAbandonedTimeout" value="180" />-->
+        <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+        <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+        <!--&lt;!&ndash; 用来检测连接是否有效的sql，要求是一个查询语句&ndash;&gt;-->
+        <!--<property name="validationQuery" value="SELECT 'x'" />-->
+        <!--&lt;!&ndash; 申请连接的时候检测 &ndash;&gt;-->
+        <!--<property name="testWhileIdle" value="true" />-->
+        <!--&lt;!&ndash; 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 &ndash;&gt;-->
+        <!--<property name="testOnBorrow" value="false" />-->
+        <!--&lt;!&ndash; 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  &ndash;&gt;-->
+        <!--<property name="testOnReturn" value="false" />-->
+        <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+        <!--<property name="poolPreparedStatements" value="true" />-->
+        <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="50" />-->
+        <!--&lt;!&ndash;属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：-->
+                <!--监控统计用的filter:stat-->
+                <!--日志用的filter:log4j-->
+               <!--防御SQL注入的filter:wall &ndash;&gt;-->
+        <!--<property name="filters" value="stat" />-->
+    <!--</bean>-->
+
+    <!--<bean id = "sqlServerJdbcTemplate"-->
+          <!--class = "org.springframework.jdbc.core.JdbcTemplate">-->
+        <!--<property name = "dataSource" ref="sqlServerDataSource"/>-->
+    <!--</bean>-->
+
+    <!--Spring监控配置-->
+    <bean id="druid-stat-interceptor"
+          class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+    </bean>
+
+    <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+          scope="prototype">
+        <property name="patterns">
+            <list>
+                <value>com.eleapp.service.*</value>
+                <value>com.eleapp.dao.*</value>
+            </list>
+        </property>
+    </bean>
+
+    <aop:config>
+        <aop:advisor advice-ref="druid-stat-interceptor"
+                     pointcut-ref="druid-stat-pointcut" />
+    </aop:config>
+
+	<!-- 开启事务管理器 -->
+	<bean id="txManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+    	<property name="dataSource" ref="mysqlDataSource" />  
+	</bean>
+
+</beans>

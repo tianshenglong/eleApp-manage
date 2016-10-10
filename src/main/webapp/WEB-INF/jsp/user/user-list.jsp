@@ -1,0 +1,121 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: 胜龙
+  Date: 2016/10/4
+  Time: 0:56
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title></title>
+    <link href="../../static/hplus/css/bootstrap.min.css-v=3.3.5.css" rel="stylesheet">
+    <link href="../../static/hplus/css/font-awesome.min.css-v=4.4.0.css" rel="stylesheet">
+    <link href="../../static/hplus/css/animate.min.css" rel="stylesheet">
+    <link href="../../static/hplus/css/style.min.css-v=4.0.0.css" rel="stylesheet">
+    <link href="../../static/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
+
+</head>
+<body style="font-family: 'open sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 13px;">
+<nav class="breadcrumb"><i class="fa fa-home"></i>
+    首页 &gt; 权限管理 &gt; 管理员维护
+    <a class="btn btn-primary"
+       style="margin-top:3px;float: right!important;margin-right:20px;padding-top: 5px"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="fa fa-refresh fa-2"></i> </a></nav>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="form-inline">
+                        <a class="btn btn-primary" onclick="role_add('添加管理员','/adminUser/toAddUser')" href="javascript:void(0);"><i class="fa fa-plus"></i> 添加管理员</a>
+                        <a href="javascript:void(0);" onclick="role_del()" class="btn btn-primary"><i class="fa fa-trash-o"></i> 批量删除</a>
+                        <a class="btn btn-primary" onclick="layer.msg('暂未实现')" href="javascript:"><i class="fa fa-reply-all"></i>导出excel</a>
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <select class="form-control" name="selectId" id="selectId">
+                                <option value="1">用户名</option>
+                                <option value="2">昵称</option>
+                            </select>
+                            <input type="text" name="userName" id="userName" class="form-control">
+                        </div>
+                        <button name="search" id="search" class="btn btn-success"><i
+                                class="fa fa-search"></i>
+                            搜索
+                        </button>
+                    </div>
+
+                    <div id="editable_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                        <table id="oTable" class="table table-striped table-bordered table-hover  dataTable" aria-describedby="editable_info">
+                            <thead>
+                            <tr role="row">
+                                <th width="25">
+                                    <input type="checkbox">
+                                </th>
+                                <th>用户名</th>
+                                <th>昵称</th>
+                                <th>密码</th>
+                                <th>邮箱</th>
+                                <th>电话</th>
+                                <th>添加时间</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/jquery-1.8.3.min.js"></script>
+<script src="../../static/layer/layer.js"></script>
+<script src="../../static/datatables/js/jquery.dataTables.js"></script>
+<script src="../../static/datatables/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+    var oTable;
+    $(document).ready(function () {
+        oTable = $('#oTable').dataTable({
+            'bServerSide': true,
+            "bAutoWidth": false,
+            "processing": true,
+            "serverSide": true,
+            "sScrollX": true,
+            "ordering": false,
+            "searching": false,
+            "dom": 't<"bottom"iflpr<"clear">>',
+            "ajax": {
+                "url": "/user/getUserList",
+                "data": function (d) {
+                    d.userName = $('#userName').val();  //请求参数
+                }
+            },
+            "columnDefs": [{
+                "render": function (data, type, row) {
+                    var buttons = '';
+                    buttons += "<input type='checkbox' value='" + row.id + "' name='checkList'>";
+                    return buttons;
+                },
+                "targets": 0,
+            }],
+            "language": {
+                "url": "../static/datatables/i18n/Chinese.json"
+            }
+        });
+
+        $('#search').click(function () {
+            oTable.fnDraw();
+        });
+
+        $('#reload').click(function () {
+            $("#selectName").val("");
+            $("#roleId").val("");
+            $("#selectId").val(1);
+            oTable.fnDraw();
+        });
+    });
+
+</script>
+</body>
+</html>
