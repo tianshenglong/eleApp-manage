@@ -60,7 +60,7 @@
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit">提交</button>
-                                <button class="btn btn-primary" type="button" onClick="layer_close();">提交</button>
+                                <button class="btn btn-primary" type="button" onClick="layer_close();">关闭</button>
                             </div>
                         </div>
                     </form>
