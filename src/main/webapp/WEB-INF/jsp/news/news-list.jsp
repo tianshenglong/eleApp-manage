@@ -45,7 +45,7 @@
 
                     <div class="form-inline">
                         <a class="btn btn-primary" onclick="addNews('添加资讯','/news/toNewsAdd')" href="javascript:void(0);"><i class="fa fa-plus"></i> 添加资讯</a>
-                        <a href="javascript:void(0);" onclick="role_del()" class="btn btn-primary"><i class="fa fa-trash-o"></i> 批量删除</a>
+                        <a href="javascript:void(0);" onclick="delNews()" class="btn btn-primary"><i class="fa fa-trash-o"></i> 批量删除</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -128,6 +128,37 @@
             }
         });
         layer.full(index);
+    }
+
+    function delNews() {
+        var str = '';
+        $("input[name='checkList']:checked").each(function(i, o) {
+            str += $(this).val();
+            str += ",";
+        });
+        if (str.length > 0) {
+            layer.confirm('确认要删除所选的培训班吗？', {
+                btn : [ '确定', '取消' ],
+                shade : false
+            }, function() {
+                var IDS = str.substr(0, str.length - 1);
+                layer.msg('操作成功!', {
+                    icon : 6,
+                    time : 2000
+                }, function () {
+                    layer.msg('已取消操作', {
+                        icon: 5,
+                        time: 1000
+                    });
+                });
+            });
+        } else {
+            layer.msg('至少选择一条记录操作!', {
+                icon : 6,
+                time : 2000
+            });
+        }
+        oTable.ajax.reload();
     }
 
 </script>
