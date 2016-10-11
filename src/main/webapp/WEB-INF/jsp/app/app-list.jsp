@@ -85,6 +85,7 @@
       "sScrollX": true,
       "ordering": false,
       "searching": false,
+
       "dom": 't<"bottom"iflpr<"clear">>',
       "ajax": {
         "url": "/app/getAppList",
@@ -117,7 +118,7 @@
       title: title,
       content: url,
       end: function (layero, index) {
-        oTable.ajax.reload();
+        oTable.fnDraw();
       }
     });
     layer.full(index);

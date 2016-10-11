@@ -91,6 +91,7 @@ public class EleNewsController {
      */
     @RequestMapping("toNewsAdd")
     public String toNewsAdd(Model model){
+        model.addAttribute("closeOrnot",0);
         return "news/news-add";
     }
 
@@ -107,6 +108,7 @@ public class EleNewsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "news/news-list";
+        model.addAttribute("closeOrnot",1);
+        return "news/news-add";
     }
 }

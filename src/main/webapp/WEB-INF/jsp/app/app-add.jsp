@@ -16,15 +16,16 @@
     <link href="../../static/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="../../static/css/style.css" rel="stylesheet">
 </head>
-<body class="gray-bg">
+<body class="gray-bg" onload="pageOnload()">
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>完整验证表单</h5>
+                    <h5>app信息</h5>
                 </div>
                 <div class="ibox-content">
+                    <input type="hidden" id="closeOrnot" name="closeOrnot" value="${closeOrnot}"/>
                     <form class="form-horizontal m-t" action="/app/addApp" method="post" class="form form-horizontal" id="form-app">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">app名称：</label>
@@ -71,6 +72,16 @@
 <script src="../../static/js/jquery-1.11.3.min.js"></script>
 <script src="../../static/layer/layer.js"></script>
 <script src="../../static/js/public.js"></script>
+
+<script>
+
+    function pageOnload(){
+        var closeOrNot =$("#closeOrnot").val();
+        if(closeOrNot == 1){
+            layer_close();
+        }
+    }
+</script>
 
 </body>
 </html>

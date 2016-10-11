@@ -90,6 +90,7 @@ public class EleAppController {
      */
     @RequestMapping("toAppAdd")
     public String toAppAdd(Model model){
+        model.addAttribute("closeOrnot",0);
         return "app/app-add";
     }
 
@@ -116,7 +117,8 @@ public class EleAppController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "app/app-list";
+        model.addAttribute("closeOrnot",1);
+        return "app/app-add";
     }
 
 }
