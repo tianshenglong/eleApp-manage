@@ -60,6 +60,7 @@
               <th>审核通过日期</th>
               <th>审核人</th>
               <th>添加时间</th>
+              <th>操作</th>
             </tr>
             </thead>
           </table>
@@ -100,6 +101,12 @@
           return buttons;
         },
         "targets": 0,
+      },{
+        "render": function (data, type, row) {
+          var buttons = "<button type='button' class='btn btn-primary btn-xs' onclick='changeAudit()'>Mini按钮</button>";
+          return buttons;
+        },
+        "targets": 7,
       }],
       "language": {
         "url": "../static/datatables/i18n/Chinese.json"
@@ -122,6 +129,26 @@
       }
     });
     layer.full(index);
+  }
+
+  function changeAudit(){
+    layer.confirm(
+            '確認要變更app的審核狀態嗎？',
+            {
+              btn: ['确定', '取消'],
+              shade: false
+            },
+            function () {
+              layer.msg('操作成功', {
+                icon: 6,
+                time: 1000
+              });
+            }, function () {
+              layer.msg('已取消操作', {
+                icon: 5,
+                time: 1000
+              });
+            });
   }
 
 </script>
