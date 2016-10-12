@@ -137,19 +137,20 @@
             str += ",";
         });
         if (str.length > 0) {
-            layer.confirm('确认要删除所选的培训班吗？', {
-                btn : [ '确定', '取消' ],
-                shade : false
-            }, function() {
+            layer.confirm('确认要删除所选的资讯吗？', {
+                btn: ['确定', '取消'], //按钮
+                shade: false //不显示遮罩
+            }, function(){
                 var IDS = str.substr(0, str.length - 1);
                 layer.msg('操作成功!', {
                     icon : 6,
                     time : 2000
-                }, function () {
-                    layer.msg('已取消操作', {
-                        icon: 5,
-                        time: 1000
-                    });
+                });
+                oTable.ajax.reload();
+            }, function(){
+                layer.msg('已取消操作', {
+                    icon: 5,
+                    time: 1000
                 });
             });
         } else {
@@ -158,7 +159,6 @@
                 time : 2000
             });
         }
-        oTable.ajax.reload();
     }
 
 </script>

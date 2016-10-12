@@ -45,16 +45,16 @@
                                 <input id="description" name="description" class="form-control" type="text">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group draggable">
                             <label class="col-sm-3 control-label">缩略图：</label>
                             <div class="col-sm-8">
-                                <input id="imgUrl" name="imgUrl" class="form-control" type="text">
+                                <input type="file" name="imgUrl" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">app：</label>
                             <div class="col-sm-8">
-                                <input id="appUrl" name="appUrl" class="form-control" type="text">
+                                <input type="file" name="appUrl" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">

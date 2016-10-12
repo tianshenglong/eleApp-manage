@@ -69,15 +69,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">图片：</label>
                             <div class="col-sm-8">
-                                <span style="display:none">
-                                    <input id="lefile" type="file" style="display:none" multiple
-                                           class="input-file" >
-                                </span>
-                                <div class="input-append form-inline">
-                                    <input id="imgUrl" class="input-large form-control" type="text" name="imgUrl"
-                                           style="height:30px;">
-                                    <a class="btn btn-primary radius" onclick="$('input[id=lefile]').click();">浏览文件</a>
-                                </div>
+                                <input type="file" id="lefile" name="imgUrl" class="form-control" >
                                 <img src="" id="img0" style="width: 110px;height: 150px;border: 0;">
                             </div>
                         </div>
@@ -118,15 +110,6 @@
 <script>
 
     $(document).ready(function () {
-        /*文件上传预览*/
-        $('input[id=lefile]').change(function () {
-            var objUrl = getObjectURL(this.files[0]);
-            if (objUrl) {
-                $("#img0").attr("src", objUrl);
-            }
-            $('#photoCover').val($(this).val());
-        });
-
         /*文件上传预览*/
         $('input[id=lefile]').change(function () {
             var objUrl = getObjectURL(this.files[0]);
