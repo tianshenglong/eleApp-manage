@@ -2,24 +2,28 @@ package com.eleapp.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.eleapp.model.EleNews;
-import com.eleapp.model.User;
-import com.eleapp.service.EleNewsService;
+import com.eleapp.model.Newsinfo;
+import com.eleapp.service.NewsInfoService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +38,16 @@ public class EleNewsController {
     private static Logger log = LoggerFactory.getLogger(EleNewsController.class);
 
     @Autowired
-    EleNewsService eleNewsService;
+    NewsInfoService newsInfoService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(
+                dateFormat, true));
+    }
+
 
     @RequestMapping("toNewsList")
     public String toUserList(Model model){
@@ -59,20 +72,19 @@ public class EleNewsController {
         try{
 
             PageHelper.startPage(page, row); //该语句下面第一个查询方法为需要分页的方法
-            List<EleNews> listNews = eleNewsService.selectAllNewsList();
+            List<Newsinfo> listNews = newsInfoService.selectAllNewsList(param);
 
             reObj.put("draw", draw);
             reObj.put("recordsTotal", ((Page) listNews).getTotal());
             reObj.put("recordsFiltered", ((Page) listNews).getTotal());
 
-            for (EleNews news: listNews) {
+            for (Newsinfo news: listNews) {
                 JSONArray jo = new JSONArray();
-                jo.add(news.getId());
-                jo.add(news.getName());
-                jo.add(news.getAuthor());
-                jo.add(news.getPublishDate());
-                jo.add(news.getNewsTypeId());
-                jo.add(news.getCreateTime());
+                jo.add(news.getAutoID());
+                jo.add(news.getNewsTitle());
+                jo.add(news.getPushTime());
+                jo.add(news.getNewsType());
+                jo.add(news.getCreateDate());
                 ja.add(jo);
             }
             reObj.put("aaData", ja);  // aaDate 为固定
@@ -96,14 +108,12 @@ public class EleNewsController {
     }
 
     @RequestMapping("/addNews")
-    public String addNews(Model model, EleNews eleNews,
-                                 @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes) {
+    public String addNews(Model model, Newsinfo news,
+                                 @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes,MultipartFile imgUrlFile) {
         try {
-            eleNews.setContent(param.get("editorValue").toString());
-            eleNews.setIsDel(1);
-            eleNews.setCreateTime(new Date());
-            eleNews.setCreator(1);
-            eleNewsService.insertSelective(eleNews);
+            news.setNewsContext(param.get("editorValue").toString());
+            news.setCreateDate(new Date());
+            newsInfoService.insertSelective(news);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -42,7 +42,7 @@
             <span><img alt="image" class="img-circle" src="../../static/hplus/img/profile_small.jpg" /></span>
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
+                               <span class="block m-t-xs"><strong class="font-bold">黑土</strong></span>
                                 <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
                                 </span>
             </a>
@@ -84,9 +84,9 @@
           </ul>
         </li>
         <li>
-          <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">app管理 </span><span class="fa arrow"></span></a>
+          <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">应用管理 </span><span class="fa arrow"></span></a>
           <ul class="nav nav-second-level">
-            <li><a class="J_menuItem" href="/app/toAppList" >app列表</a>
+            <li><a class="J_menuItem" href="/app/toAppList" >应用列表</a>
             </li>
           </ul>
         </li>

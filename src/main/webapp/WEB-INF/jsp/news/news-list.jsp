@@ -56,8 +56,7 @@
                                 <input type="checkbox">
                             </th>
                             <th>标题</th>
-                            <th>作者</th>
-                            <th>发布时间</th>
+                            <th>推送时间</th>
                             <th>资讯类别</th>
                             <th>添加时间</th>
                         </tr>
@@ -124,7 +123,7 @@
             title: title,
             content: url,
             end: function (layero, index) {
-                oTable.ajax.reload();
+                oTable.fnDraw();
             }
         });
         layer.full(index);
@@ -146,7 +145,7 @@
                     icon : 6,
                     time : 2000
                 });
-                oTable.ajax.reload();
+                oTable.fnDraw();
             }, function(){
                 layer.msg('已取消操作', {
                     icon: 5,

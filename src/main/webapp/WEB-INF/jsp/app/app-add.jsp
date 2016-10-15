@@ -22,39 +22,87 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>app信息</h5>
+                    <h5>请填写应用基本信息</h5>
                 </div>
                 <div class="ibox-content">
                     <input type="hidden" id="closeOrnot" name="closeOrnot" value="${closeOrnot}"/>
                     <form class="form-horizontal m-t" action="/app/addApp" method="post" class="form form-horizontal" id="form-app">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">app名称：</label>
+                            <label class="col-sm-3 control-label">应用编号：</label>
                             <div class="col-sm-8">
-                                <input id="name" name="name" class="form-control" type="text">
+                                <input id="appCode" name="appCode" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">所属单位：</label>
+                            <label class="col-sm-3 control-label">应用名称：</label>
+                            <div class="col-sm-8">
+                                <input id="appName" name="appName" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">应用说明：</label>
+                            <div class="col-sm-8">
+                                <textarea name="appExplain" id="appExplain" cols="" rows="" class="form-control" maxlength="300"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">应用类型：</label>
+                            <div class="col-sm-8">
+                                <select id="appType" name="appType" class="form-control">
+                                    <option value="1">益智</option>
+                                    <option value="2">射击</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">公司编号：</label>
                             <div class="col-sm-8">
                                 <input id="companyCode" name="companyCode" class="form-control" type="text" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">描述：</label>
+                            <label class="col-sm-3 control-label">应用所在地址：</label>
                             <div class="col-sm-8">
-                                <input id="description" name="description" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group draggable">
-                            <label class="col-sm-3 control-label">缩略图：</label>
-                            <div class="col-sm-8">
-                                <input type="file" name="imgUrl" class="form-control">
+                                <input type="text" name="AppAddress" id="AppAddress" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">app：</label>
+                            <label class="col-sm-3 control-label">应用大小：</label>
                             <div class="col-sm-8">
-                                <input type="file" name="appUrl" class="form-control">
+                                <input id="appSize" name="appSize" class="form-control" type="text" >
+                            </div>
+                        </div>
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">小图：</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="imgSmallFile" id="imgSmallFile" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">大图：</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="imgBigFile" id="imgBigFile" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">是否付费：</label>
+                            <div class="col-sm-8">
+                                <input type="radio" id="radio-1" name="isFree" value="1" >
+                                <label for="radio-1">是</label>
+                                <input type="radio" id="radio-2" name="isFree" value="0" >
+                                <label for="radio-2">否</label>
+                            </div>
+                        </div>
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">价格：</label>
+                            <div class="col-sm-8">
+                                <input id="price" name="price" class="form-control" type="text" >
+                            </div>
+                        </div>
+                        <div class="form-group draggable">
+                            <label class="col-sm-3 control-label">上传说明：</label>
+                            <div class="col-sm-8">
+                                <textarea name="uploadExplain" id="uploadExplain" cols="" rows="" class="form-control" maxlength="300"></textarea>
                             </div>
                         </div>
                         <div class="form-group">

@@ -57,11 +57,14 @@
                             <th width="25">
                                 <input type="checkbox">
                             </th>
-                            <th>用户名</th>
-                            <th>昵称</th>
-                            <th>密码</th>
+                            <th>用户Code</th>
+                            <th>用户名称</th>
+                            <th>手机号码</th>
+                            <th>用户类型</th>
+                            <th>用户昵称</th>
+                            <th>积分</th>
                             <th>邮箱</th>
-                            <th>电话</th>
+                            <th>状态</th>
                             <th>添加时间</th>
                         </tr>
                         </thead>

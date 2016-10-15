@@ -31,52 +31,54 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">资讯名称：</label>
                             <div class="col-sm-8">
-                                <input id="name" name="name" class="form-control" type="text">
+                                <input id="newsName" name="newsName" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">发布时间：</label>
+                            <label class="col-sm-3 control-label">资讯标题：</label>
                             <div class="col-sm-8">
-                                <input type="text" name="publishDate" class="form-control"
+                                <input id="newsTitle" name="newsTitle" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">推送时间：</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="pushTime" class="form-control"
                                        onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
                                        id="publishDate" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">作者：</label>
+                            <label class="col-sm-3 control-label">资讯类型：</label>
                             <div class="col-sm-8">
-                                <input id="author" name="author" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">资讯类别：</label>
-                            <div class="col-sm-8">
-                                <input id="newsTypeId" name="newsTypeId" class="form-control" type="text">
+                                <select id="newsType" name="newsType" class="form-control">
+                                    <option value="1">益智</option>
+                                    <option value="2">射击</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">关键字：</label>
                             <div class="col-sm-8">
-                                <input id="keywords" name="keywords" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">描述：</label>
-                            <div class="col-sm-8">
-                                <input id="description" name="description" class="form-control" type="text">
+                                <textarea name="keyWords" id="keyWords" cols="" rows="" class="form-control" maxlength="300"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">图片：</label>
                             <div class="col-sm-8">
-                                <input type="file" id="lefile" name="imgUrl" class="form-control" >
-                                <img src="" id="img0" style="width: 110px;height: 150px;border: 0;">
+                                <input type="file" id="imgUrl" name="imgUrlFile" class="form-control" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">权重：</label>
                             <div class="col-sm-8">
                                 <input id="weight" name="weight" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">描述：</label>
+                            <div class="col-sm-8">
+                                <textarea name="description" id="description" cols="" rows="" class="form-control" maxlength="300"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -136,6 +138,7 @@
     function pageOnload(){
         var closeOrNot =$("#closeOrnot").val();
         if(closeOrNot == 1){
+            layer.msg("操作成功");
             layer_close();
         }
     }

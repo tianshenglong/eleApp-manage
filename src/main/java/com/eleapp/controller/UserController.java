@@ -2,8 +2,8 @@ package com.eleapp.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.eleapp.model.User;
-import com.eleapp.service.UserService;
+import com.eleapp.model.Userinfo;
+import com.eleapp.service.UserInfoService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.base.Strings;
@@ -29,7 +29,7 @@ public class UserController {
     private static Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    UserService userService;
+    UserInfoService userInfoService;
 
     /**
      * 跳转到用户列表页
@@ -68,21 +68,24 @@ public class UserController {
         try{
 
             PageHelper.startPage(page, row); //该语句下面第一个查询方法为需要分页的方法
-            List<User> listUser = userService.selectAllUserList();
+            List<Userinfo> listUser = userInfoService.selectAllUserList(param);
 
             reObj.put("draw", draw);
             reObj.put("recordsTotal", ((Page) listUser).getTotal());
             reObj.put("recordsFiltered", ((Page) listUser).getTotal());
 
-            for (User user: listUser) {
+            for (Userinfo user: listUser) {
                 JSONArray jo = new JSONArray();
-                jo.add(user.getId());
+                jo.add(user.getAutoID());
+                jo.add(user.getUserCode());
                 jo.add(user.getUserName());
-                jo.add(user.getName());
-                jo.add(user.getPassWord());
-                jo.add(user.getEmail());
-                jo.add(user.getTel());
-                jo.add(user.getCreateTime());
+                jo.add(user.getPhoneNum());
+                jo.add(user.getUserType());
+                jo.add(user.getNickName());
+                jo.add(user.getIntegration());
+                jo.add(user.getEMail());
+                jo.add(user.getStatus());
+                jo.add(user.getCreateDate());
                 ja.add(jo);
             }
             reObj.put("aaData", ja);  // aaDate 为固定

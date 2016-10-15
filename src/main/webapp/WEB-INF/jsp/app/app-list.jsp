@@ -30,8 +30,8 @@
         <div class="ibox-title">
           <div class="form-inline">
             <div class="form-group">
-              <select class="form-control" name="selectId" id="selectId">
-                <option value="1">名称</option>
+              <select class="form-control" name="apptype" id="apptype">
+                <option value="1">应用名称</option>
               </select>
               <input type="text" name="keywords" id="keywords" class="form-control">
             </div>
@@ -43,7 +43,7 @@
           <br/>
 
           <div class="form-inline">
-            <a class="btn btn-primary" onclick="addApp('添加管理员','/app/toAppAdd')" href="javascript:void(0);"><i class="fa fa-plus"></i> 添加app</a>
+            <a class="btn btn-primary" onclick="addApp('添加应用','/app/toAppAdd')" href="javascript:void(0);"><i class="fa fa-plus"></i> 添加应用</a>
             <a href="javascript:void(0);" onclick="delApp()" class="btn btn-primary"><i class="fa fa-trash-o"></i> 批量删除</a>
           </div>
         </div>
@@ -54,12 +54,14 @@
               <th width="25">
                 <input type="checkbox">
               </th>
-              <th>名称</th>
-              <th>所属单位</th>
-              <th>审核状态</th>
-              <th>审核通过日期</th>
-              <th>审核人</th>
-              <th>添加时间</th>
+              <th>应用编号</th>
+              <th>应用名称</th>
+              <th>应用类型</th>
+              <th>公司编号</th>
+              <th>是否付费</th>
+              <th>价格</th>
+              <th>状态</th>
+              <th>创建时间</th>
               <th>操作</th>
             </tr>
             </thead>
@@ -91,7 +93,8 @@
       "ajax": {
         "url": "/app/getAppList",
         "data": function (d) {
-          d.userName = $('#userName').val();  //请求参数
+          d.apptype = $("#apptype  option:selected").val();  //请求参数
+          d.keywords = $('#keywords').val();  //请求参数
         }
       },
       "columnDefs": [{
@@ -103,13 +106,13 @@
         "targets": 0,
       },{
         "render": function (data, type, row) {
-          if (row[3] == '1') {
-            return "<button type='button' class='btn btn-primary btn-xs' onclick='changeAudit()'>已审核</button>"
-          } else if (row[3] == '0') {
-            return "<button type='button' class='btn btn-primary btn-xs' onclick='changeAudit()'>审核</button>"
+          if (row[7] == '已审核') {
+            return "<button type='button' class='btn btn-primary btn-xs' onclick='changeAudit(0,"+row[0]+")'>已审核</button>"
+          } else if (row[7] == '未审核') {
+            return "<button type='button' class='btn btn-primary btn-xs' onclick='changeAudit(1,"+row[0]+")'>审核</button>"
           }
         },
-        "targets": 7,
+        "targets": 9,
       }],
       "language": {
         "url": "../static/datatables/i18n/Chinese.json"
@@ -134,7 +137,7 @@
     layer.full(index);
   }
 
-  function changeAudit(){
+  function changeAudit(type,id){
     layer.confirm(
             '确认要变更app的审核状态吗？',
             {
@@ -142,9 +145,35 @@
               shade: false
             },
             function () {
-              layer.msg('操作成功', {
-                icon: 6,
-                time: 1000
+              $.ajax({
+                dataType : 'json',
+                type : 'POST',
+                cache : false,
+                url : '/app/updateAppStatus',
+                data : {
+                  id : id,
+                  status:type
+                },
+                async : false,
+                success : function(data) {
+                  if (data == true) {
+                    layer.msg('操作成功', {
+                      icon: 6,
+                      time: 1000
+                    });
+                  } else {
+                    layer.msg('操作失败', {
+                      icon: 5,
+                      time: 1000
+                    });
+                  }
+                  oTable.fnDraw();
+                },
+                error : function(data) {
+                  layer.alert('批量删除失败!', {
+                    icon : 5
+                  });
+                },
               });
             }, function () {
               layer.msg('已取消操作', {
@@ -178,6 +207,7 @@
           time: 1000
         });
       });
+    }else{
       layer.msg('至少选择一条记录操作!', {
         icon : 6,
         time : 2000
