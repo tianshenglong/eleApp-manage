@@ -46,7 +46,11 @@ public class UserInfoService {
     }
 
 
-    public List<Userinfo> selectAllUserList(Map param){
+    public List<Map> selectAllUserList(Map param){
         return userinfoMapper.selectAllUserList(param);
+    }
+
+    public Userinfo getUserByUserNameAndPwd(String userName,String passWord){
+        return userinfoMapper.getUserByUserNameAndPwd(userName,passWord);
     }
 }

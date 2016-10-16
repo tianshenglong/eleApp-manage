@@ -4215,7 +4215,6 @@ jQuery.fn.extend({
 		return false;
 	},
 
-	val: function( value ) {
 		var ret, hooks, isFunction,
 			elem = this[0];
 

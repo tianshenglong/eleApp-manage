@@ -6,12 +6,15 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/controller/LoginController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/controller/UserController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/AppinfoMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/ApptypeinfoMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/NewsinfoMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/UserinfoMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/Appinfo.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/Apptypeinfo.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/Newsinfo.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/Userinfo.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mappers/AppinfoMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mappers/ApptypeinfoMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mappers/NewsinfoMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mappers/UserinfoMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/static/My97DatePicker" charset="GBK" />

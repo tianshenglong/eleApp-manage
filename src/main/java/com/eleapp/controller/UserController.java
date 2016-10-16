@@ -2,6 +2,7 @@ package com.eleapp.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.eleapp.model.Appinfo;
 import com.eleapp.model.Userinfo;
 import com.eleapp.service.UserInfoService;
 import com.github.pagehelper.Page;
@@ -15,7 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +35,29 @@ public class UserController {
 
     @Autowired
     UserInfoService userInfoService;
+
+
+    @RequestMapping("toAppUser")
+    public String toAppUser(Model model){
+        model.addAttribute("closeOrnot",0);
+        return "user/user-add";
+    }
+
+    @RequestMapping("/addUser")
+    public String addUser(Model model, Userinfo userinfo,
+                         @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes) {
+        try {
+
+            userinfo.setStatus(0);
+            userinfo.setCreateDate(new Date());
+            userInfoService.insertSelective(userinfo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("closeOrnot",1);
+        return "app/app-add";
+    }
 
     /**
      * 跳转到用户列表页
@@ -68,24 +96,24 @@ public class UserController {
         try{
 
             PageHelper.startPage(page, row); //该语句下面第一个查询方法为需要分页的方法
-            List<Userinfo> listUser = userInfoService.selectAllUserList(param);
+            List<Map> listUser = userInfoService.selectAllUserList(param);
 
             reObj.put("draw", draw);
             reObj.put("recordsTotal", ((Page) listUser).getTotal());
             reObj.put("recordsFiltered", ((Page) listUser).getTotal());
 
-            for (Userinfo user: listUser) {
+            for (Map user: listUser) {
                 JSONArray jo = new JSONArray();
-                jo.add(user.getAutoID());
-                jo.add(user.getUserCode());
-                jo.add(user.getUserName());
-                jo.add(user.getPhoneNum());
-                jo.add(user.getUserType());
-                jo.add(user.getNickName());
-                jo.add(user.getIntegration());
-                jo.add(user.getEMail());
-                jo.add(user.getStatus());
-                jo.add(user.getCreateDate());
+                jo.add(user.get("AutoID"));
+                jo.add(user.get("UserCode"));
+                jo.add(user.get("UserName"));
+                jo.add(user.get("PhoneNum"));
+                jo.add(user.get("UserType"));
+                jo.add(user.get("NickName"));
+                jo.add(user.get("Integration"));
+                jo.add(user.get("EMail"));
+                jo.add(user.get("Status"));
+                jo.add(user.get("CreateDate"));
                 ja.add(jo);
             }
             reObj.put("aaData", ja);  // aaDate 为固定

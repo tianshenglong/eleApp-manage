@@ -30,11 +30,11 @@
                 <div class="ibox-title">
                     <div class="form-inline">
                         <div class="form-group">
-                            <select class="form-control" name="selectId" id="selectId">
+                            <select class="form-control" name="usertype" id="usertype">
                                 <option value="1">用户名</option>
                                 <option value="2">昵称</option>
                             </select>
-                            <input type="text" name="userName" id="userName" class="form-control">
+                            <input type="text" name="keywords" id="keywords" class="form-control">
                         </div>
                         <button name="search" id="search" class="btn btn-success"><i
                                 class="fa fa-search"></i>
@@ -44,7 +44,7 @@
                     <br/>
 
                     <div class="form-inline">
-                        <a class="btn btn-primary" onclick="role_add('添加管理员','/adminUser/toAddUser')"
+                        <a class="btn btn-primary" onclick="addUser('添加管理员','/user/toAppUser')"
                            href="javascript:void(0);"><i class="fa fa-plus"></i> 添加管理员</a>
                         <a href="javascript:void(0);" onclick="role_del()" class="btn btn-primary"><i
                                 class="fa fa-trash-o"></i> 批量删除</a>
@@ -95,7 +95,8 @@
             "ajax": {
                 "url": "/user/getUserList",
                 "data": function (d) {
-                    d.userName = $('#userName').val();  //请求参数
+                    d.usertype = $("#usertype  option:selected").val();  //请求参数
+                    d.keywords = $('#keywords').val();  //请求参数
                 }
             },
             "columnDefs": [{
@@ -122,6 +123,19 @@
             oTable.fnDraw();
         });
     });
+
+    /*资讯-添加*/
+    function addUser(title, url) {
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url,
+            end: function (layero, index) {
+                oTable.fnDraw();
+            }
+        });
+        layer.full(index);
+    }
 
 </script>
 </body>

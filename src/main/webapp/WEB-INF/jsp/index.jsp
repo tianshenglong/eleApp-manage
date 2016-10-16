@@ -42,7 +42,7 @@
             <span><img alt="image" class="img-circle" src="../../static/hplus/img/profile_small.jpg" /></span>
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">黑土</strong></span>
+                               <span class="block m-t-xs"><strong class="font-bold">${userName}</strong></span>
                                 <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
                                 </span>
             </a>

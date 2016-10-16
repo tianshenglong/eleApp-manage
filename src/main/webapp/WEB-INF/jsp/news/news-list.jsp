@@ -30,7 +30,7 @@
                 <div class="ibox-title">
                     <div class="form-inline">
                         <div class="form-group">
-                            <select class="form-control" name="selectId" id="selectId">
+                            <select class="form-control" name="type" id="type">
                                 <option value="1">资讯名称</option>
                                 <option value="2">关键字</option>
                             </select>
@@ -88,7 +88,8 @@
             "ajax": {
                 "url": "/news/getNewsList",
                 "data": function (d) {
-                    d.userName = $('#userName').val();  //请求参数
+                    d.type = $("#type  option:selected").val();  //请求参数
+                    d.keywords = $('#keywords').val();  //请求参数
                 }
             },
             "columnDefs": [{
@@ -116,7 +117,7 @@
         });
     });
 
-    /*单位-添加*/
+    /*资讯-添加*/
     function addNews(title, url) {
         var index = layer.open({
             type: 2,

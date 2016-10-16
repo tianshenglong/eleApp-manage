@@ -64,5 +64,5 @@ public interface NewsinfoMapper {
      */
     int updateByPrimaryKey(Newsinfo record);
 
-    List<Newsinfo> selectAllNewsList(Map  param);
+    List<Map> selectAllNewsList(Map  param);
 }

@@ -46,7 +46,7 @@ public class NewsInfoService {
         return newsinfoMapper.updateByPrimaryKey(record);
     }
 
-    public List<Newsinfo> selectAllNewsList(Map  param){
+    public List<Map> selectAllNewsList(Map  param){
         return newsinfoMapper.selectAllNewsList(param);
     }
 }

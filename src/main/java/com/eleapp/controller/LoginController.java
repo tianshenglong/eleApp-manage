@@ -1,5 +1,8 @@
 package com.eleapp.controller;
 
+import com.eleapp.model.Userinfo;
+import com.eleapp.service.UserInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,8 @@ import java.util.HashMap;
 @Controller
 public class LoginController {
 
+    @Autowired
+    UserInfoService userInfoService;
     /*
      * 页面登录
 	 */
@@ -27,7 +32,9 @@ public class LoginController {
         if (null == loginName || null == pwd || "".equals(loginName) || "".equals(pwd)) {
             msg.put("msg", "用户名密码不能为空，请重新输入");
         } else {
-            if (loginName.equals("admin")&&pwd.equals("123456")) {
+            Userinfo userinfo = userInfoService.getUserByUserNameAndPwd(loginName,pwd);
+            if (userinfo !=null) {
+                request.getSession().setAttribute("userName", loginName);
                 msg.put("msg", "ok");
                 response.sendRedirect("index");
             } else {

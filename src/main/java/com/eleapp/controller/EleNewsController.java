@@ -72,19 +72,19 @@ public class EleNewsController {
         try{
 
             PageHelper.startPage(page, row); //该语句下面第一个查询方法为需要分页的方法
-            List<Newsinfo> listNews = newsInfoService.selectAllNewsList(param);
+            List<Map> listNews = newsInfoService.selectAllNewsList(param);
 
             reObj.put("draw", draw);
             reObj.put("recordsTotal", ((Page) listNews).getTotal());
             reObj.put("recordsFiltered", ((Page) listNews).getTotal());
 
-            for (Newsinfo news: listNews) {
+            for (Map news: listNews) {
                 JSONArray jo = new JSONArray();
-                jo.add(news.getAutoID());
-                jo.add(news.getNewsTitle());
-                jo.add(news.getPushTime());
-                jo.add(news.getNewsType());
-                jo.add(news.getCreateDate());
+                jo.add(news.get("AutoID"));
+                jo.add(news.get("NewsTitle"));
+                jo.add(news.get("PushTime"));
+                jo.add(news.get("NewsType"));
+                jo.add(news.get("CreateDate"));
                 ja.add(jo);
             }
             reObj.put("aaData", ja);  // aaDate 为固定

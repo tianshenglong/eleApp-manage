@@ -1,6 +1,7 @@
 package com.eleapp.dao;
 
 import com.eleapp.model.Userinfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -57,5 +58,7 @@ public interface UserinfoMapper {
     int updateByPrimaryKey(Userinfo record);
 
 
-    List<Userinfo> selectAllUserList(Map param);
+    List<Map> selectAllUserList(Map param);
+
+    Userinfo getUserByUserNameAndPwd(@Param("userName")String userName,@Param("passWord")String passWord);
 }

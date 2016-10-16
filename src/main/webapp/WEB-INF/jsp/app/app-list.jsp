@@ -124,7 +124,7 @@
     });
   });
 
-  /*单位-添加*/
+  /*应用-添加*/
   function addApp(title, url) {
     var index = layer.open({
       type: 2,
