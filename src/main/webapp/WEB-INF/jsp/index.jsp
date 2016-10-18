@@ -66,12 +66,15 @@
         <li>
           <a href="#">
             <i class="fa fa-home"></i>
-            <span class="nav-label">用户管理</span>
+            <span class="nav-label">系统管理</span>
             <span class="fa arrow"></span>
           </a>
           <ul class="nav nav-second-level">
             <li>
               <a class="J_menuItem" href="/user/toUserList"data-index="0">用户列表</a>
+            </li>
+            <li>
+              <a class="J_menuItem" href="/role/toRoleList"data-index="0">角色管理</a>
             </li>
           </ul>
 

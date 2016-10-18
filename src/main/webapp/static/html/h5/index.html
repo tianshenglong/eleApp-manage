@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Color theme for statusbar -->
+    <meta name="theme-color" content="#2196f3">
+    <title>展示页面-主页</title>
+
+    <link rel="stylesheet" href="../../css/framework7.material.css">
+    <link rel="stylesheet" href="../../css/framework7.material.colors.css">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,500,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../css/my-app.css">
+    <!--高德地图-->
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/main1119.css"/>
+    <script type="text/javascript"
+            src="http://webapi.amap.com/maps?v=1.3&key=6cd640086d739510b3a5ac1f5a1e9447&callback=init"></script>
+    <style type="text/css">
+        #initMap {
+            width: 100%;
+            height: 100%;
+            font-family: "微软雅黑";
+            font-size: 12px;
+            margin: 0px;
+            position: relative;
+        }
+
+        #button_float {
+            position: absolute;
+            z-index: 200;
+            top: 85%;
+            width: 100%;
+            /*content: ;*/
+            left: 0;
+        }
+
+        div[class*="col-"] {
+            background: #fff;
+            text-align: center;
+            color: #000;
+            /*border: 1px solid #ddd;*/
+            box-shadow: 0px 2px 1px 0px #888888;
+            padding: 5px;
+        }
+
+        #divbt01 {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        #divbt04 {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .row {
+            margin-bottom: 15px;
+        }
+
+    </style>
+
+    <script>
+        function init() {
+            var map, geolocation;
+            map = new AMap.Map('initMap', {
+                zoom: 15,
+//                center: [116.39, 39.9]
+                resizeEnable: true
+            });
+            map.plugin(["AMap.Geolocation"], function () {
+//                startAssistantLocation();
+                geolocation = new AMap.Geolocation({
+                    useNative: true,
+                    enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                    timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+                    zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                    showMarker: false,        //定位成功后在定位到的位置显示点标记，默认：true
+                    showCircle: false,        //定位成功后用圆圈表示定位精度范围，默认：true
+                    panToLocation: true,
+                    buttonPosition: 'LB',
+                    showButton: false
+                });
+                map.addControl(geolocation);
+                geolocation.getCurrentPosition();
+                AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+                AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+            });
+
+            function onComplete(data) {
+                var longitude = data.position.getLng(); // 经度
+                var latitude = data.position.getLat(); // 纬度
+                (data.isConverted ? '是' : '否');//
+
+                console.log("-----获取到的经纬度------------->" + longitude + "\n" + latitude);
+            }
+
+            //解析定位错误信息
+            function onError(data) {
+                console.log("定位失败")
+            }
+
+        }
+
+
+        function loadinit() {
+
+            var userid = getQueryString("userid");
+            console.log("-------------获取url地址--------->" + userid);
+            if (userid == null || userid == "" || userid == undefined){
+                return;
+            }
+            var obj = new Object();
+            obj.userCode = userid;
+            var str = JSON.stringify(obj);
+            $.ajax({
+                type: 'POST',
+                url: 'http://139.129.230.228:9090/jsonp/queryUserByCode.action',
+                data: {"data": str, "sign": "xxx"},
+                dataType: 'jsonp',
+                jsonpCallback: 'callback',
+                success: function (data) {
+                    console.log("---------------json  >" + JSON.stringify(data))
+                    var userName = data.userName;
+                    var email = data.eMail;
+                    var nickName = data.nickName;
+                    var phoneNum = data.phoneNum;
+                    console.log("----->" + userName + "---->" + email + "----->" + nickName + "---->" + phoneNum)
+                    document.getElementById("content_title_userName").innerHTML = nickName;
+                    document.getElementById("ce_userName").innerHTML=nickName;
+                    switch (data.result) {
+                        case 000000: // 获取成功
+
+                            break;
+                        case 120002: //服务器错误
+
+                            break;
+                        case 140001: // 用户信息不存在
+
+                            break;
+                    }
+                },
+                error: function (e) {
+                }
+            })
+        }
+
+
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+    </script>
+
+</head>
+<body onload="loadinit()">
+<!-- 侧栏 -->
+<div class="panel-overlay"></div>
+<div class="panel panel-left panel-cover">
+    <div data-page="panels" class="page">
+        <div class="navbar" style="background: rgba(6, 14, 35, 0.84);padding: 60px">
+            <div class="navbar-inner">
+                <div class="list-block media-list">
+                    <ul>
+                        <li class="item-content">
+                            <div class="item-media"><img src="../../image/bj122.png" width="100"/></div>
+                            <div class="item-inner">
+                                <div class="item-title-row ">
+                                    <div id="ce_userName" class="item-title" style="margin-left: 10px">kims</div>
+                                </div>
+                                <div class="item-subtitle"
+                                     style="width: 60px;height: 20px; background-color: #FFA000 ;border-radius: 50px;font-size: 12px;">
+                                    &nbsp;&nbsp;查看详情
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="page-content" style=" clear:both;margin-top: 34%">
+            <div class="list-block">
+                <ul class="ce_phoneBind">
+                    <li class="item-content">
+                        <div><img src="../../image/dianhua.png" width="30" height="30"/></div>
+                        <div class="item-inner" style="margin-left: 10px">
+                            <div class="item-title">号码绑定</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="ce_history">
+                    <li class="item-content">
+                        <div><img src="../../image/lishi.png" width="30" height="30"/></div>
+                        <div class="item-inner" style="margin-left: 10px">
+                            <div class="item-title">历史消息</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="ce_renewal">
+                    <li class="item-content">
+                        <div><img src="../../image/chongzhi.png" width="30" height="30"/></div>
+                        <div class="item-inner" style="margin-left: 10px">
+                            <div class="item-title">充值续费</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="ce_opinion">
+                    <li class="item-content">
+                        <div><img src="../../image/yijianfanki.png" width="30" height="30"/></div>
+                        <div class="item-inner" style="margin-left: 10px">
+                            <div class="item-title">意见反馈</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="ce_addBaobao">
+                    <li class="item-content">
+                        <div><img src="../../image/tianjiabaobao.png" width="30" height="30"/></div>
+                        <div class="item-inner" style="margin-left: 10px">
+                            <div class="item-title">添加宝宝</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="ce_setting">
+                    <li class="item-content">
+                        <div><img src="../../image/shezhi.png" width="30" height="30"/></div>
+                        <div class="item-inner" style="margin-left: 10px">
+                            <div class="item-title">软件设置</div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Views -->
+<div class="views">
+    <div class="view view-main">
+        <div class="pages navbar-fixed toolbar-fixed">
+            <div data-page="index" class="page">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="right">
+                            <a class="links">
+                                <i class="icon icon-bars"></i>
+                            </a>
+                        </div>
+                        <div class="center"  style="font-size: 18px">
+                            <span id="content_title_userName">
+
+                            </span>
+
+                            <img src="../../image/sanjiaoxing.png" width="20" height="15">
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div id="initMap"></div>
+                <div id="button_float">
+                    <div class="content-block">
+                        <div class="row no-gutter">
+                            <div class="col-25" id="divbt01">
+                                <img src="../../image/ditu.png" width="12" height="12">
+                                实时位置
+                                <!--<img src="img/fengexian.png"  height="15" width="2"  />-->
+                            </div>
+                            <div class="col-25" id="divbt02">
+                                <img src="../../image/ditu.png" width="12" height="12">
+                                历史轨迹
+                                <!--<img src="img/fengexian.png" height="15" width="2"  />-->
+                            </div>
+                            <div class="col-25" id="divbt03">
+                                <img src="../../image/anquandao.png" width="12" height="12">
+                                安全岛
+                                <!--<img src="img/fengexian.png"  height="15" width="2"  />-->
+                            </div>
+
+                            <div class="col-25" id="divbt04">
+                                <img src="../../image/dianhua.png" width="12" height="12">
+                                语音通话
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Links popover -->
+
+<script src="../../js/jquery-3.1.1.min.js"></script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script src="http://hm.baidu.com/hm.js?cc30e4e066c7d71609ef2660f4825876"></script>
+<script src="../../js/framework7.js"></script>
+<script src="../../js/myApp.js"></script>
+
+
+</body>
+
+
+</html>
