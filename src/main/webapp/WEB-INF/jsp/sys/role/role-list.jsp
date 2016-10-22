@@ -97,7 +97,7 @@
         "targets": 0,
       },{
         "render": function (data, type, row) {
-            return "<button type='button' class='btn btn-primary btn-xs' onclick='authorizeRole("+row[0]+")'>功能授权</button>"
+            return "<button type='button' class='btn btn-primary btn-xs' onClick=\"role_resource('设置功能权限','/role/toRoleResourcesManager?roleId=" + row[0] + "','"+row[0]+"')\">功能授权</button>"
         },
         "targets": 5}],
       "language": {
@@ -127,8 +127,19 @@
     layer.full(index);
   }
 
-  function authorizeRole(){
-    layer.alert("敬请期待......");
+  /*角色-资源管理*/
+  function role_resource(title, url, id) {
+    if (id == '1') {
+      layer.msg("管理员不可修改权限");
+      return;
+    }
+    layer.open({
+      type: 2,
+      skin: 'layui-layer-rim', //加上边框
+      area: ['420px', '470px'], //宽高
+      title: title,
+      content: url
+    });
   }
 
 </script>

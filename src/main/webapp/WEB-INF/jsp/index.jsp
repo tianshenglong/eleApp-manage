@@ -5,6 +5,7 @@
   Time: 22:56
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -63,37 +64,22 @@
           <div class="logo-element">H+
           </div>
         </li>
-        <li>
-          <a href="#">
-            <i class="fa fa-home"></i>
-            <span class="nav-label">系统管理</span>
-            <span class="fa arrow"></span>
-          </a>
-          <ul class="nav nav-second-level">
-            <li>
-              <a class="J_menuItem" href="/user/toUserList"data-index="0">用户列表</a>
-            </li>
-            <li>
-              <a class="J_menuItem" href="/role/toRoleList"data-index="0">角色管理</a>
-            </li>
-          </ul>
-
-        </li>
-        <li>
-          <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">资讯管理</span><span class="fa arrow"></span></a>
-          <ul class="nav nav-second-level">
-            <li><a class="J_menuItem" href="/news/toNewsList" >资讯列表</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">应用管理 </span><span class="fa arrow"></span></a>
-          <ul class="nav nav-second-level">
-            <li><a class="J_menuItem" href="/app/toAppList" >应用列表</a>
-            </li>
-          </ul>
-        </li>
-
+        <c:forEach var="topMenu" items="${sessionScope.userAccess.userRole.roleTopMenuList}" >
+          <li>
+            <a href="/">
+              <i class="${topMenu.logo}"></i>
+              <span class="nav-label">${topMenu.menuName}</span>
+              <span class="fa arrow"></span>
+            </a>
+            <ul class="nav nav-second-level">
+              <c:forEach var="subMenu" items="${topMenu.roleSubMenuList}">
+                <li>
+                  <a class="J_menuItem" href="${subMenu.url}" data-index="0">${subMenu.menuName}</a>
+                </li>
+              </c:forEach>
+            </ul>
+          </li>
+        </c:forEach>
       </ul>
     </div>
   </nav>

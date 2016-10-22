@@ -1,6 +1,7 @@
 package com.eleapp.dao;
 
 import com.eleapp.model.SysRbacRole;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -56,4 +57,6 @@ public interface SysRbacRoleMapper {
 
 
     List<Map> selectAllRoleList(Map param);
+
+    List<SysRbacRole> getRoleAllListByRoleName(@Param("roleName")String roleName);
 }

@@ -2,8 +2,11 @@ package com.eleapp.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.eleapp.dao.SysRbacUserroleMapper;
 import com.eleapp.model.Appinfo;
+import com.eleapp.model.SysRbacUserrole;
 import com.eleapp.model.Userinfo;
+import com.eleapp.service.SysRbacRoleService;
 import com.eleapp.service.UserInfoService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -36,21 +39,35 @@ public class UserController {
     @Autowired
     UserInfoService userInfoService;
 
+    @Autowired
+    SysRbacRoleService roleService;
+
+    @Autowired
+    SysRbacUserroleMapper sysRbacUserroleMapper;
+
 
     @RequestMapping("toAppUser")
     public String toAppUser(Model model){
+        model.addAttribute("roleList", roleService.getRoleAllListByRoleName(""));
         model.addAttribute("closeOrnot",0);
         return "user/user-add";
     }
 
     @RequestMapping("/addUser")
-    public String addUser(Model model, Userinfo userinfo,
+    public String addUser(Model model, Userinfo userinfo,String roleId,
                          @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes) {
         try {
+
+
 
             userinfo.setStatus(0);
             userinfo.setCreateDate(new Date());
             userInfoService.insertSelective(userinfo);
+
+            SysRbacUserrole ybsRbacUserRole = new SysRbacUserrole();
+            ybsRbacUserRole.setRoleId(Integer.parseInt(roleId));
+            ybsRbacUserRole.setUserId(userinfo.getAutoID());
+            sysRbacUserroleMapper.insert(ybsRbacUserRole);
 
         } catch (Exception e) {
             e.printStackTrace();

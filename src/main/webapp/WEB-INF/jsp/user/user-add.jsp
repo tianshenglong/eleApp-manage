@@ -5,6 +5,7 @@
   Time: 22:22
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -38,6 +39,17 @@
                             <label class="col-sm-3 control-label">用户名称：</label>
                             <div class="col-sm-8">
                                 <input id="UserName" name="UserName" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">用户角色：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="roleId" id="roleId">
+                                    <option value="">请选择</option>
+                                    <c:forEach var="role" items="${roleList}">
+                                        <option value="${role.id}">${role.roleName}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
