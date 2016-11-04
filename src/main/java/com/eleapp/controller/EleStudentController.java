@@ -2,6 +2,8 @@ package com.eleapp.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.eleapp.model.Appinfo;
+import com.eleapp.model.EleStudent;
 import com.eleapp.service.EleStudentService;
 import com.eleapp.service.EleTeacherService;
 import com.github.pagehelper.Page;
@@ -10,12 +12,21 @@ import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +41,14 @@ public class EleStudentController {
 
     @Autowired
     EleStudentService eleStudentService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(
+                dateFormat, true));
+    }
 
     @RequestMapping("toStudentList")
     public String toStudentList(Model model){
@@ -60,13 +79,17 @@ public class EleStudentController {
             reObj.put("recordsTotal", ((Page) listNews).getTotal());
             reObj.put("recordsFiltered", ((Page) listNews).getTotal());
 
-            for (Map news: listNews) {
+            for (Map stu: listNews) {
                 JSONArray jo = new JSONArray();
-                jo.add(news.get("AutoID"));
-                jo.add(news.get("NewsTitle"));
-                jo.add(news.get("PushTime"));
-                jo.add(news.get("NewsType"));
-                jo.add(news.get("CreateDate"));
+                jo.add(stu.get("id"));
+                jo.add(stu.get("name"));
+                jo.add(stu.get("sertId"));
+                jo.add(stu.get("sex"));
+                jo.add(stu.get("parentMobile"));
+                jo.add(stu.get("email"));
+                jo.add(stu.get("birthDay"));
+                jo.add(stu.get("createTime"));
+                jo.add(stu.get("motifyTime"));
                 ja.add(jo);
             }
             reObj.put("aaData", ja);  // aaDate 为固定
@@ -75,5 +98,36 @@ public class EleStudentController {
             log.info("获取学生列表数据出错");
         }
         return reObj;
+    }
+
+    @RequestMapping("toStudentAdd")
+    public String toStudentAdd(Model model){
+        model.addAttribute("closeOrnot",0);
+        return "student/student-add";
+    }
+
+    /**
+     * 添加app的方法
+     * @param model
+     * @param student
+     * @param param
+     * @param request
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("/addStudent")
+    public String addStudent(Model model, EleStudent student,
+                         @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes,MultipartFile imgUrlFile) {
+        try {
+
+            student.setIsDel(1);
+            student.setCreateTime(new Date());
+            eleStudentService.insertSelective(student);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("closeOrnot",1);
+        return "app/app-add";
     }
 }

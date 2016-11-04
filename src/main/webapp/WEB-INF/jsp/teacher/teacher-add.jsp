@@ -23,75 +23,76 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>资讯信息</h5>
+                    <h5>教师信息</h5>
                 </div>
                 <div class="ibox-content">
                     <input type="hidden" id="closeOrnot" name="closeOrnot" value="${closeOrnot}"/>
-                    <form  action="/news/addNews" method="post" class="form form-horizontal" id="form-news" enctype="multipart/form-data">
+                    <form  action="/teacher/addTeacher" method="post" class="form form-horizontal" id="form-news" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">资讯名称：</label>
+                            <label class="col-sm-3 control-label">是否是班主任：</label>
                             <div class="col-sm-8">
-                                <input id="newsName" name="newsName" class="form-control" type="text">
+                                <input type="radio" name="isAdviser"  value="1" >是<input type="radio" name="isAdviser" value="2" checked >否
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">资讯标题：</label>
+                            <label class="col-sm-3 control-label">姓名：</label>
                             <div class="col-sm-8">
-                                <input id="newsTitle" name="newsTitle" class="form-control" type="text">
+                                <input id="name" name="name" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">推送时间：</label>
+                            <label class="col-sm-3 control-label">身份证号：</label>
                             <div class="col-sm-8">
-                                <input type="text" name="pushTime" class="form-control"
-                                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
-                                       id="publishDate" >
+                                <input id="sertId" name="sertId" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">资讯类型：</label>
+                            <label class="col-sm-3 control-label">性别：</label>
                             <div class="col-sm-8">
-                                <select id="newsType" name="newsType" class="form-control">
-                                    <option value="1">益智</option>
-                                    <option value="2">射击</option>
-                                </select>
+                                <input type="radio" name="sex" id="male" value="1" >男<input type="radio" name="sex" id="famale" value="2" >女
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">关键字：</label>
+                            <label class="col-sm-3 control-label">生日：</label>
                             <div class="col-sm-8">
-                                <textarea name="keyWords" id="keyWords" cols="" rows="" class="form-control" maxlength="300"></textarea>
+                                <input type="text" name="birthDay" class="form-control"
+                                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                       id="birthDay" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">图片：</label>
+                            <label class="col-sm-3 control-label">密码：</label>
+                            <div class="col-sm-8">
+                                <input type="password" name="passWord" class="form-control" id="passWord" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">校验密码：</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="validatePwd" class="form-control" id="validatePwd" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">头像：</label>
                             <div class="col-sm-8">
                                 <input type="file" id="imgUrl" name="imgUrlFile" class="form-control" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">权重：</label>
+                            <label class="col-sm-3 control-label">手机：</label>
                             <div class="col-sm-8">
-                                <input id="weight" name="weight" class="form-control" type="text">
+                                <input id="mobile" name="mobile" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">描述：</label>
+                            <label class="col-sm-3 control-label">邮箱：</label>
                             <div class="col-sm-8">
-                                <textarea name="description" id="description" cols="" rows="" class="form-control" maxlength="300"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">资讯内容：</label>
-                            <div class="col-sm-8">
-                                <script id="editor" type="text/plain"
-                                        style="width: 100%; height: 400px;"></script>
+                                <input id="email" name="email" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button class="btn btn-primary" type="submit">提交</button>
-                                <button class="btn btn-primary" type="submit">存草稿</button>
                                 <button class="btn btn-primary" type="button" onClick="layer_close();">取消</button>
                             </div>
                         </div>
@@ -104,9 +105,6 @@
 
 <script src="../../static/js/jquery-1.11.3.min.js"></script>
 <script src="../../static/layer/layer.js"></script>
-<script src="../../static/ueditor/ueditor.config.js"></script>
-<script src="../../static/ueditor/ueditor.all.min.js"></script>
-<script src="../../static/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script src="../../static/My97DatePicker/WdatePicker.js"></script>
 <script src="../../static/js/public.js"></script>
 <script>
@@ -133,8 +131,6 @@
             return url;
         }
     });
-    var ue = UE.getEditor('editor');//初始化ueditor
-
     function pageOnload(){
         var closeOrNot =$("#closeOrnot").val();
         if(closeOrNot == 1){

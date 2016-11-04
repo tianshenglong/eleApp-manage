@@ -18,7 +18,7 @@
 </head>
 <body class="gray-bg">
 <nav class="breadcrumb"><i class="fa fa-home"></i>
-    首页 &gt; 资讯管理 &gt; 资讯列表
+    首页 &gt; 通讯录 &gt; 学生管理
     <a class="btn btn-primary"
        style="margin-top:3px;float: right!important;margin-right:20px;padding-top: 5px"
        href="javascript:location.replace(location.href);" title="刷新">
@@ -31,8 +31,8 @@
                     <div class="form-inline">
                         <div class="form-group">
                             <select class="form-control" name="type" id="type">
-                                <option value="1">资讯名称</option>
-                                <option value="2">关键字</option>
+                                <option value="1">姓名</option>
+                                <option value="2">身份证号</option>
                             </select>
                             <input type="text" name="keywords" id="keywords" class="form-control">
                         </div>
@@ -44,8 +44,8 @@
                     <br/>
 
                     <div class="form-inline">
-                        <a class="btn btn-primary" onclick="addNews('添加资讯','/news/toNewsAdd')" href="javascript:void(0);"><i class="fa fa-plus"></i> 添加资讯</a>
-                        <a href="javascript:void(0);" onclick="delNews()" class="btn btn-primary"><i class="fa fa-trash-o"></i> 批量删除</a>
+                        <a class="btn btn-primary" onclick="addStudent('添加学生','/student/toStudentAdd')" href="javascript:void(0);"><i class="fa fa-plus"></i> 添加学生</a>
+                        <a href="javascript:void(0);" onclick="delStudent()" class="btn btn-primary"><i class="fa fa-trash-o"></i> 批量删除</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -55,10 +55,14 @@
                             <th width="25">
                                 <input type="checkbox">
                             </th>
-                            <th>标题</th>
-                            <th>推送时间</th>
-                            <th>资讯类别</th>
+                            <th>姓名</th>
+                            <th>身份证号</th>
+                            <th>性别</th>
+                            <th>家长手机号</th>
+                            <th>邮箱</th>
+                            <th>生日</th>
                             <th>添加时间</th>
+                            <th>修改时间</th>
                         </tr>
                         </thead>
                     </table>
@@ -86,7 +90,7 @@
             "searching": false,
             "dom": 't<"bottom"iflpr<"clear">>',
             "ajax": {
-                "url": "/news/getNewsList",
+                "url": "/student/getStudentList",
                 "data": function (d) {
                     d.type = $("#type  option:selected").val();  //请求参数
                     d.keywords = $('#keywords').val();  //请求参数
@@ -110,15 +114,12 @@
         });
 
         $('#reload').click(function () {
-            $("#selectName").val("");
-            $("#roleId").val("");
-            $("#selectId").val(1);
             oTable.fnDraw();
         });
     });
 
     /*资讯-添加*/
-    function addNews(title, url) {
+    function addStudent(title, url) {
         var index = layer.open({
             type: 2,
             title: title,
@@ -130,14 +131,14 @@
         layer.full(index);
     }
 
-    function delNews() {
+    function delStudent() {
         var str = '';
         $("input[name='checkList']:checked").each(function(i, o) {
             str += $(this).val();
             str += ",";
         });
         if (str.length > 0) {
-            layer.confirm('确认要删除所选的资讯吗？', {
+            layer.confirm('确认要删除所选的学生吗？', {
                 btn: ['确定', '取消'], //按钮
                 shade: false //不显示遮罩
             }, function(){
