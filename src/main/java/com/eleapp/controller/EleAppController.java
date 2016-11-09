@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -107,14 +108,14 @@ public class EleAppController {
      */
     @RequestMapping("/addApp")
     public String addApp(Model model, Appinfo eleApp,
-                          @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes,MultipartFile imgSmallFile,MultipartFile imgBigFile) {
+                          @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes,MultipartFile imgSmallFile,MultipartFile imgBigFile,HttpSession session) {
         try {
 
             eleApp.setStatus(0);
             eleApp.setCreateDate(new Date());
             eleApp.setUploadUserID(1); //上传人
             eleApp.setOperaterUserID("1"); //操作人
-            appInfoService.insertSelective(eleApp);
+            appInfoService.insertSelective(eleApp,imgBigFile,imgSmallFile,request,session);
 
         } catch (Exception e) {
             e.printStackTrace();

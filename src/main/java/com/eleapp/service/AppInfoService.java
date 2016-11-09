@@ -2,9 +2,13 @@ package com.eleapp.service;
 
 import com.eleapp.dao.AppinfoMapper;
 import com.eleapp.model.Appinfo;
+import com.eleapp.util.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +34,13 @@ public class AppInfoService {
     }
 
 
-    public int insertSelective(Appinfo record){
+    public int insertSelective(Appinfo record,MultipartFile bigImg,MultipartFile smallImg,HttpServletRequest request,HttpSession session){
+
+        String bigImgUrl = UploadUtil.uploadFile(bigImg, request, session);
+        String smallImgUrl = UploadUtil.uploadFile(smallImg,request,session);
+        record.setImgBig(bigImgUrl);
+        record.setImgSmall(smallImgUrl);
+
         record.setAppKey(UUID.randomUUID().toString());
         record.setCreateDate(new Date());
         record.setStatus(0);

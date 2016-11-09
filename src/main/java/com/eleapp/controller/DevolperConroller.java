@@ -4,6 +4,7 @@ import com.eleapp.model.Appinfo;
 import com.eleapp.model.EleCompany;
 import com.eleapp.service.AppInfoService;
 import com.eleapp.service.CompanyService;
+import com.eleapp.util.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.Random;
 
@@ -44,10 +47,10 @@ public class DevolperConroller {
         return "devolper/app-add";
     }
     @RequestMapping("addApp")
-    public String addApp(Model model,Appinfo appinfo,MultipartFile bigImg,MultipartFile smallImg){
-        appInfoService.insertSelective(appinfo);
+    public String addApp(Model model,Appinfo appinfo,MultipartFile bigImg,MultipartFile smallImg,HttpServletRequest request,HttpSession session){
+        appInfoService.insertSelective(appinfo,bigImg,smallImg,request,session);
         model.addAttribute("AppKey", appinfo.getAppKey());
-        model.addAttribute("Secret", new Random().toString());
+        model.addAttribute("Secret", (int)((Math.random()*9+1)*100000));
         return "devolper/success";
     }
 }
