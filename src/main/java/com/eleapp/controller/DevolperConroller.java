@@ -30,7 +30,7 @@ public class DevolperConroller {
     @Autowired
     AppInfoService appInfoService;
 
-    @RequestMapping(value="/index", method = RequestMethod.GET)
+    @RequestMapping(value="/", method = RequestMethod.GET)
     public String toIndex(Model model){
         return "devolper/index";
     }
