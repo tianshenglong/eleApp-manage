@@ -28,7 +28,7 @@ public class UploadUtil {
                 if (type!=null) {// 判断文件类型是否为空
                     if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
                         // 项目在容器中实际发布运行的根路径
-                        String realPath=request.getSession().getServletContext().getRealPath("/static/uploadImg/app/");
+                        String realPath=request.getSession().getServletContext().getRealPath("/uploadImg/");
                         // 自定义的文件名称
                         String trueFileName=String.valueOf(System.currentTimeMillis())+fileName;
                         // 设置存放图片文件的路径
