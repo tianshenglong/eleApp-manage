@@ -136,7 +136,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="calltoaction-wrapper">
-          <h3>大象sdk下载!</h3> <a href="http://www.dragdropsite.com" class="btn btn-orange">立即下载</a>
+          <h3>大象sdk下载!</h3> <a href="../../static/sdk/esdk.zip" class="btn btn-orange">立即下载</a>
         </div>
       </div>
     </div>
