@@ -2,9 +2,8 @@ package com.eleapp.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.eleapp.model.EleApp;
-import com.eleapp.model.EleNews;
-import com.eleapp.service.EleAppService;
+import com.eleapp.model.Appinfo;
+import com.eleapp.service.AppInfoService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.base.Strings;
@@ -16,9 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class EleAppController {
     private static Logger log = LoggerFactory.getLogger(EleAppController.class);
 
     @Autowired
-    EleAppService eleAppService;
+    AppInfoService appInfoService;
 
     @RequestMapping("toAppList")
     public String toUserList(Model model){
@@ -58,21 +59,23 @@ public class EleAppController {
         try{
 
             PageHelper.startPage(page, row); //该语句下面第一个查询方法为需要分页的方法
-            List<EleApp> listApp = eleAppService.selectAllAppList();
+            List<Map> listApp = appInfoService.selectAllAppList(param);
 
             reObj.put("draw", draw);
             reObj.put("recordsTotal", ((Page) listApp).getTotal());
             reObj.put("recordsFiltered", ((Page) listApp).getTotal());
 
-            for (EleApp app: listApp) {
+            for (Map map: listApp) {
                 JSONArray jo = new JSONArray();
-                jo.add(app.getId());
-                jo.add(app.getName());
-                jo.add(app.getCompanyCode());
-                jo.add(app.getAuditing());
-                jo.add(app.getAuditDate());
-                jo.add(app.getAuditUserId());
-                jo.add(app.getCreateTime());
+                jo.add(map.get("AutoID"));
+                jo.add(map.get("AppCode"));
+                jo.add(map.get("AppName"));
+                jo.add(map.get("AppType"));
+                jo.add(map.get("CompanyCode"));
+                jo.add(map.get("IsFree"));
+                jo.add(map.get("Price"));
+                jo.add(map.get("Status"));
+                jo.add(map.get("CreateDate"));
                 ja.add(jo);
             }
             reObj.put("aaData", ja);  // aaDate 为固定
@@ -90,6 +93,7 @@ public class EleAppController {
      */
     @RequestMapping("toAppAdd")
     public String toAppAdd(Model model){
+        model.addAttribute("closeOrnot",0);
         return "app/app-add";
     }
 
@@ -103,20 +107,35 @@ public class EleAppController {
      * @return
      */
     @RequestMapping("/addApp")
-    public String addApp(Model model, EleApp eleApp,
-                          @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes) {
+    public String addApp(Model model, Appinfo eleApp,
+                          @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes,MultipartFile imgSmallFile,MultipartFile imgBigFile,HttpSession session) {
         try {
 
-            eleApp.setAuditing(0);
-            eleApp.setIsDel(1);
-            eleApp.setCreateTime(new Date());
-            eleApp.setCreator(1);
-            eleAppService.insertSelective(eleApp);
+            eleApp.setStatus(0);
+            eleApp.setCreateDate(new Date());
+            eleApp.setUploadUserID(1); //上传人
+            eleApp.setOperaterUserID("1"); //操作人
+            appInfoService.insertSelective(eleApp,imgBigFile,imgSmallFile,request,session);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "app/app-list";
+        model.addAttribute("closeOrnot",1);
+        return "app/app-add";
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/updateAppStatus")
+    public Boolean updateAppStatus(String status,String id) {
+        Boolean reStatus = false;
+        try {
+            appInfoService.updateAppStatus(status,id);
+            reStatus = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return reStatus;
     }
 
 }

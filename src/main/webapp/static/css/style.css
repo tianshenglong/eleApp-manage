@@ -1,0 +1,58 @@
+.breadcrumb {
+    background-color: #F5F5F5
+}
+
+.wrapper-content{
+    padding: 10px;
+}
+
+.breadcrumb {
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 39px;
+    height: 39px;
+    padding-left: 20px;
+    overflow: hidden
+}
+
+.breadcrumb span {
+    padding: 0 5px
+}
+/*设置datatables 分页样式*/
+.dataTables_wrapper .dataTables_info {
+    clear: both;
+    float: left;
+    padding-top: 10px;
+    font-size: 14px;
+    color: #666
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    padding-top: 5px;
+    padding-right: 10px;
+    text-align: right
+}
+
+.dataTables_wrapper .dataTables_length {
+    padding-bottom: 10px;
+    float: left;
+    padding-top: 5px;
+    padding-left: 10px
+}
+
+.dataTables_wrapper .dataTables_length .select {
+    width: 50px
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right
+}
+
+.dataTables_wrapper .dataTables_filter .input-text {
+    width: auto
+}
+
+.dataTables-example{
+    font-size: 12px;
+}
