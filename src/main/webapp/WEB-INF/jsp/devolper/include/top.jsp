@@ -12,15 +12,15 @@
       <ul>
         <li class="logo-wrapper" style="font-size:18px;"><img src="../../static/image/eleico.png"/>大象开放平台</li>
         <li class="active">
-          <a href="#">首页</a>
+          <a href="">首页</a>
         </li>
         <li>
-          <a href="#">文档</a>
+          <a href="">文档</a>
         </li>
         <li class="has-submenu">
-          <a href="#">微服务 +</a>
+          <a href="">微服务 +</a>
 
-          <div class="mainmenu-submenu">
+          <div class="mainmenu-submenu" style="width: 66.375px;">
             <div class="mainmenu-submenu-inner">
               <div>
                 <ul>
@@ -32,7 +32,7 @@
           </div>
         </li>
         <li>
-          <a href="credits.html">支持</a>
+          <a href="">支持</a>
         </li>
       </ul>
     </nav>

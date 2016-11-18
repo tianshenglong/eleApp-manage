@@ -12,10 +12,10 @@
       <div class="col-footer col-md-6 col-xs-6">
         <h3>导航</h3>
         <ul class="no-list-style footer-navigate-section">
-          <li><a href="#">首页</a></li>
-          <li><a href="#">文档</a></li>
-          <li><a href="#">微服务</a></li>
-          <li><a href="#">支持</a></li>
+          <li><a href="">首页</a></li>
+          <li><a href="">文档</a></li>
+          <li><a href="">微服务</a></li>
+          <li><a href="">支持</a></li>
         </ul>
       </div>
       <div class="col-footer col-md-6 col-xs-6">
