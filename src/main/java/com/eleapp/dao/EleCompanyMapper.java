@@ -1,6 +1,10 @@
 package com.eleapp.dao;
 
 import com.eleapp.model.EleCompany;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 public interface EleCompanyMapper {
     /**
@@ -50,4 +54,8 @@ public interface EleCompanyMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(EleCompany record);
+
+    List<Map> selectAllCompList(Map param);
+
+    int updateCompStatus(@Param("status")String status,@Param("id")String id);
 }

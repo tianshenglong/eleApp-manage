@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 胜龙 on 2016/11/8.
@@ -42,4 +44,15 @@ public class CompanyService {
     public int updateByPrimaryKey(EleCompany record){
         return eleCompanyMapper.updateByPrimaryKey(record);
     }
+
+    public List<Map> selectAllCompList(Map param){
+        return eleCompanyMapper.selectAllCompList(param);
+    }
+
+    public int updateCompStatus(String status,String id){
+        return eleCompanyMapper.updateCompStatus(status,id);
+    }
+
+
+
 }
