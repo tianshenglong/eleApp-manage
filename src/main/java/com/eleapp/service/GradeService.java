@@ -45,4 +45,8 @@ public class GradeService {
     public List<Map> selectAllGradeList(Map param){
         return eleGradeMapper.selectAllGradeList(param);
     }
+
+    public List<Map> getGradeListBySchool(String schoolId){
+        return eleGradeMapper.getGradeListBySchool(schoolId);
+    }
 }

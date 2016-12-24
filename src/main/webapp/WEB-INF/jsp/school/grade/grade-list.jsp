@@ -1,21 +1,22 @@
 <%--
   Created by IntelliJ IDEA.
   User: 胜龙
-  Date: 2016/10/19
-  Time: 0:02
+  Date: 2016/10/8
+  Time: 18:55
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+  <title></title>
   <link href="../../static/hplus/css/bootstrap.min.css-v=3.3.5.css" rel="stylesheet">
   <link href="../../static/hplus/css/font-awesome.min.css-v=4.4.0.css" rel="stylesheet">
   <link href="../../static/hplus/css/animate.min.css" rel="stylesheet">
   <link href="../../static/hplus/css/style.min.css-v=4.0.0.css" rel="stylesheet">
   <link href="../../static/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
   <link href="../../static/css/style.css" rel="stylesheet">
+
 </head>
 <body class="gray-bg">
 <nav class="breadcrumb"><i class="fa fa-home"></i>
@@ -42,7 +43,7 @@
           <br/>
 
           <div class="form-inline">
-            <a class="btn btn-primary" onclick="addRole('添加年级','/role/toRoleAdd')"
+            <a class="btn btn-primary" onclick="addGrade('添加年级','/graClass/toGradeAdd')"
                href="javascript:void(0);"><i class="fa fa-plus"></i> 添加年级</a>
           </div>
         </div>
@@ -56,7 +57,6 @@
               <th>年级名称</th>
               <th>所属学校</th>
               <th>创建时间</th>
-              <th>修改时间</th>
             </tr>
             </thead>
           </table>
@@ -65,15 +65,17 @@
     </div>
   </div>
 </div>
-<script src="../../static/js/jquery-1.8.3.min.js"></script>
+
+<script src="../../static/js/jquery-2.1.4.min.js"></script>
 <script src="../../static/layer/layer.js"></script>
 <script src="../../static/datatables/js/jquery.dataTables.js"></script>
 <script src="../../static/datatables/js/dataTables.bootstrap.js"></script>
 <script src="../../static/js/public.js"></script>
+
+
 <script type="text/javascript">
   var oTable;
   $(document).ready(function () {
-
     oTable = $('#oTable').dataTable({
       'bServerSide': true,
       "bAutoWidth": false,
@@ -104,14 +106,10 @@
     $('#search').click(function () {
       oTable.fnDraw();
     });
-
-    $('#reload').click(function () {
-      oTable.fnDraw();
-    });
   });
 
-  /*资讯-添加*/
-  function addRole(title, url) {
+  /*年级-添加*/
+  function addGrade(title, url) {
     var index = layer.open({
       type: 2,
       title: title,
@@ -121,21 +119,6 @@
       }
     });
     layer.full(index);
-  }
-
-  /*角色-资源管理*/
-  function role_resource(title, url, id) {
-    if (id == '1') {
-      layer.msg("管理员不可修改权限");
-      return;
-    }
-    layer.open({
-      type: 2,
-      skin: 'layui-layer-rim', //加上边框
-      area: ['420px', '470px'], //宽高
-      title: title,
-      content: url
-    });
   }
 
 </script>

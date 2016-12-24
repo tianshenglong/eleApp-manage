@@ -341,11 +341,6 @@
     }
   }
 
-
-  function uploadAppImgs(){
-    $('.box2').fadeIn("slow");
-  }
-
 </script>
 </body>
 </html>

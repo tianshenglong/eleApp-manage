@@ -1,5 +1,6 @@
 package com.eleapp.controller;
 
+import com.eleapp.service.GradeService;
 import com.eleapp.service.OrganizationService;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class PublicController {
 
     @Autowired
     OrganizationService organizationService;
+
+    @Autowired
+    GradeService gradeService;
 
     @RequestMapping("/getCityList")
     @ResponseBody
@@ -61,5 +65,19 @@ public class PublicController {
             ruralList.add(ImmutableMap.of(id, name));
         }
         return ruralList;
+    }
+
+    @RequestMapping("/getGradeList")
+    @ResponseBody
+    public ArrayList getGradeList(String schoolId) {
+        List<Map> index1 = gradeService.getGradeListBySchool(schoolId);
+        ArrayList<ImmutableMap<String, String>> gradeList = com.google.common.collect.Lists.newArrayList();
+        gradeList.add(ImmutableMap.of("0", "请选择"));
+        for (Map<String, Object> stringObjectMap : index1) {
+            String id =  stringObjectMap.get("id").toString();
+            String name = (String) stringObjectMap.get("name");
+            gradeList.add(ImmutableMap.of(id, name));
+        }
+        return gradeList;
     }
 }

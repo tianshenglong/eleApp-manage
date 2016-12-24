@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core_1_1" %>
 <html>
 <head>
     <title></title>
@@ -23,21 +24,26 @@
     <div class="col-sm-12">
       <div class="ibox float-e-margins">
         <div class="ibox-title">
-          <h5>角色信息</h5>
+          <h5>年级信息</h5>
         </div>
         <div class="ibox-content">
           <input type="hidden" id="closeOrnot" name="closeOrnot" value="${closeOrnot}"/>
-          <form  action="/role/addRole" method="post" class="form form-horizontal" id="form-user">
+          <form  action="/graClass/addGrade" method="post" class="form form-horizontal" id="form-user">
             <div class="form-group">
-              <label class="col-sm-3 control-label">角色名称：</label>
+              <label class="col-sm-3 control-label">年级名称：</label>
               <div class="col-sm-8">
-                <input id="roleName" name="roleName" class="form-control" type="text">
+                <input id="name" name="name" class="form-control" type="text">
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">角色描述：</label>
+              <label class="col-sm-3 control-label">所属学校：</label>
               <div class="col-sm-8">
-                <input id="comments" name="comments" class="form-control" type="text">
+                <select id="schoolId" name="schoolId" class="form-control">
+                  <option value="">请选择</option>
+                  <c:forEach var="sc" items="${allSchool}">
+                    <option value="${sc.id}">${sc.name}</option>
+                  </c:forEach>
+                </select>
               </div>
             </div>
             <div class="form-group">
@@ -57,30 +63,6 @@
 <script src="../../static/layer/layer.js"></script>
 <script src="../../static/js/public.js"></script>
 <script>
-
-  $(document).ready(function () {
-    /*文件上传预览*/
-    $('input[id=lefile]').change(function () {
-      var objUrl = getObjectURL(this.files[0]);
-      if (objUrl) {
-        $("#img0").attr("src", objUrl);
-      }
-      $('#photoCover').val($(this).val());
-    });
-
-    function getObjectURL(file) {
-      var url = null;
-      if (window.createObjectURL != undefined) { // basic
-        url = window.createObjectURL(file);
-      } else if (window.URL != undefined) { // mozilla(firefox)
-        url = window.URL.createObjectURL(file);
-      } else if (window.webkitURL != undefined) { // webkit or chrome
-        url = window.webkitURL.createObjectURL(file);
-      }
-      return url;
-    }
-  });
-  var ue = UE.getEditor('editor');//初始化ueditor
 
   function pageOnload(){
     var closeOrNot =$("#closeOrnot").val();

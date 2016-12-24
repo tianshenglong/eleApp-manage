@@ -159,4 +159,25 @@
     </if>
     order by gr.id desc
   </select>
+
+  <!--根据条件获取年级列表-->
+  <select id="getGradeListBySchool" resultType="map" >
+    SELECT
+    gr.id,
+    gr.`name`,
+    sc.`name` schoolName,
+    date_format(
+    gr.createTime,
+    '%Y-%m-%d %H:%i:%s'
+    ) createTime,
+    gr.motifyTime,
+    gr.isDel
+    FROM
+    ele_grade gr
+    LEFT JOIN ele_school sc ON gr.schoolId = sc.id
+    WHERE
+    gr.IsDel = 1
+    and gr.schoolId = #{schoolId}
+    order by gr.id desc
+  </select>
 </mapper>

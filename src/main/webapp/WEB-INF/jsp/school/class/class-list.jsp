@@ -42,7 +42,7 @@
           <br/>
 
           <div class="form-inline">
-            <a class="btn btn-primary" onclick="addRole('添加班级','/role/toRoleAdd')"
+            <a class="btn btn-primary" onclick="addClass('添加班级','/graClass/toClassAdd')"
                href="javascript:void(0);"><i class="fa fa-plus"></i> 添加班级</a>
           </div>
         </div>
@@ -57,7 +57,6 @@
               <th>所属年级</th>
               <th>所属学校</th>
               <th>创建时间</th>
-              <th>修改时间</th>
             </tr>
             </thead>
           </table>
@@ -109,8 +108,8 @@
     });
   });
 
-  /*资讯-添加*/
-  function addRole(title, url) {
+  /*年级-添加*/
+  function addClass(title, url) {
     var index = layer.open({
       type: 2,
       title: title,
@@ -120,21 +119,6 @@
       }
     });
     layer.full(index);
-  }
-
-  /*角色-资源管理*/
-  function role_resource(title, url, id) {
-    if (id == '1') {
-      layer.msg("管理员不可修改权限");
-      return;
-    }
-    layer.open({
-      type: 2,
-      skin: 'layui-layer-rim', //加上边框
-      area: ['420px', '470px'], //宽高
-      title: title,
-      content: url
-    });
   }
 
 </script>

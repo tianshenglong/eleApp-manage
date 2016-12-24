@@ -1,6 +1,7 @@
 package com.eleapp.dao;
 
 import com.eleapp.model.EleGrade;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -55,4 +56,6 @@ public interface EleGradeMapper {
     int updateByPrimaryKey(EleGrade record);
 
     List<Map> selectAllGradeList(Map param);
+
+    List<Map> getGradeListBySchool(@Param("schoolId")String schoolId);
 }
