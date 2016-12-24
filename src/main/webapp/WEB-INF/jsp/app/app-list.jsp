@@ -62,27 +62,18 @@
               <th>应用编号</th>
               <th>应用名称</th>
               <th>应用类型</th>
-              <th>公司编号</th>
+              <th>公司名称</th>
               <th>是否付费</th>
               <th>价格</th>
               <th>状态</th>
+              <th>是否精品</th>
               <th>创建时间</th>
               <th>操作</th>
             </tr>
             </thead>
           </table>
-
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="boxshow">
-  <div class="box2">
-    <div class="login5"></div>
-    <div class="login51">
-      <div id="demo" class="demo"></div>
     </div>
   </div>
 </div>
@@ -127,7 +118,7 @@
             return "<button type='button' class='btn btn-primary btn-xs' onclick='changeAudit(1,"+row[0]+")'>审核</button>"
           }
         },
-        "targets": 9,
+        "targets": 10,
       }],
       "language": {
         "url": "../static/datatables/i18n/Chinese.json"

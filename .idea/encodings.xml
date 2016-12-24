@@ -8,21 +8,35 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleAppImagesMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleApptotypeMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleApptypeMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleClassMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleClassMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleCompanyMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleGradeMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleRbacOrganizationMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleSchoolMapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleStuschclassMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/dao/EleWebSchoolcaseMapper.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleAppImages.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleApptotype.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleApptype.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleClass.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleClass.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleGrade.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleGrade.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleRbacOrganization.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleSchool.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleStuschclass.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/eleapp/model/EleWebSchoolcase.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleAppImagesMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleApptotypeMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleApptypeMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleClassMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleClassMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleGradeMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleGradeMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleRbacOrganizationMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleSchoolMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleStuschclassMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mappers/EleWebSchoolcaseMapper.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/static/My97DatePicker" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/static/hplus" charset="GBK" />

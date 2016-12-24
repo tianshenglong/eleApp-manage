@@ -36,6 +36,11 @@ public class EleCompanyController {
         return "company/comp-list";
     }
 
+    @RequestMapping("toChoiceCompList")
+    public String toChoiceCompList(Model model){
+        return "company/choicecomp-list";
+    }
+
     @RequestMapping("getCompList")
     @ResponseBody
     public JSONObject getCompList(Model model,String start, String length, String draw,@RequestParam Map param){

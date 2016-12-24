@@ -92,6 +92,7 @@ public class EleAppController {
                 jo.add(map.get("IsFree"));
                 jo.add(map.get("Price"));
                 jo.add(map.get("Status"));
+                jo.add(map.get("isPerfect"));
                 jo.add(map.get("CreateDate"));
                 ja.add(jo);
             }

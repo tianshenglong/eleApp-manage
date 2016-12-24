@@ -220,10 +220,33 @@
 
 
   <select id="selectAllSchoolList" resultType="map">
-    select <include refid="Base_Column_List" />
-    from ele_school where IsDel = 1
+    SELECT
+    sc.id,
+    sc.`name`,
+    pro.`name` province,
+    ci.`name` city,
+    co.`name` county,
+    ru.`name` rural,
+    sc.address,
+    sc.contactPerson,
+    sc.contactMobile,
+    sc.STATUS,
+    date_format(
+    sc.createTime,
+    '%Y-%m-%d %H:%i:%s'
+    ) createTime,
+    sc.motifyTime,
+    sc.isDel
+    FROM
+    ele_school sc
+    LEFT JOIN ele_rbac_organization pro ON sc.province = pro.id
+    LEFT JOIN ele_rbac_organization ci ON sc.city = ci.id
+    LEFT JOIN ele_rbac_organization co ON sc.county = co.id
+    LEFT JOIN ele_rbac_organization ru ON sc.rural = ru.id
+    WHERE
+    sc.IsDel = 1
     <if test="type!= null and type!= '' and type ==1 ">
-      AND `name` like CONCAT('%', #{keywords},'%')
+      AND sc.`name` like CONCAT('%', #{keywords},'%')
     </if>
   </select>
 </mapper>

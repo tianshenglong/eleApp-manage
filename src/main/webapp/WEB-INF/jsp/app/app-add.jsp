@@ -28,6 +28,7 @@
                 <div class="ibox-content">
                     <input type="hidden" id="closeOrnot" name="closeOrnot" value="${closeOrnot}"/>
                     <form class="form-horizontal m-t" action="/app/addApp" method="post" class="form form-horizontal" id="form-app">
+                        <input type="hidden" id="companyCode" name="companyCode"  />
                         <div class="form-group">
                             <label class="col-sm-3 control-label">应用编号：</label>
                             <div class="col-sm-8">
@@ -57,9 +58,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">公司编号：</label>
+                            <label class="col-sm-3 control-label">选择单位：</label>
                             <div class="col-sm-8">
-                                <input id="companyCode" name="companyCode" class="form-control" type="text" >
+                                <input id="companyName" name="companyName" class="form-control" type="text" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -124,6 +125,20 @@
 <script src="../../static/js/public.js"></script>
 
 <script>
+
+    $(function () {
+        $("#companyName").focus(function () {
+            layer.open({
+                type: 2,
+                title: '选择单位',
+                shadeClose: false,
+                shade: 0.8,
+                area: ['70%', '90%'],
+                content: '/comp/toChoiceCompList'
+            });
+            $("#companyName").blur();
+        });
+    });
 
     function pageOnload(){
         var closeOrNot =$("#closeOrnot").val();

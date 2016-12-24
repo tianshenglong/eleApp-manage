@@ -5,6 +5,7 @@
   Time: 0:02
   To change this template use File | Settings | File Templates.
 --%>
+<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,7 +19,7 @@
 </head>
 <body class="gray-bg">
 <nav class="breadcrumb"><i class="fa fa-home"></i>
-  首页 &gt; 权限管理 &gt; 角色维护
+  首页 &gt; 学校管理 &gt; 班级管理
   <a class="btn btn-primary"
      style="margin-top:3px;float: right!important;margin-right:20px;padding-top: 5px"
      href="javascript:location.replace(location.href);" title="刷新">
@@ -30,8 +31,8 @@
         <div class="ibox-title">
           <div class="form-inline">
             <div class="form-group">
-              角色名称
-              <input type="text" name="roleName" id="roleName" class="form-control">
+              班级名称
+              <input type="text" name="className" id="className" class="form-control">
             </div>
             <button name="search" id="search" class="btn btn-success"><i
                     class="fa fa-search"></i>
@@ -41,8 +42,8 @@
           <br/>
 
           <div class="form-inline">
-            <a class="btn btn-primary" onclick="addRole('添加角色','/role/toRoleAdd')"
-               href="javascript:void(0);"><i class="fa fa-plus"></i> 添加角色</a>
+            <a class="btn btn-primary" onclick="addRole('添加班级','/role/toRoleAdd')"
+               href="javascript:void(0);"><i class="fa fa-plus"></i> 添加班级</a>
           </div>
         </div>
         <div class="ibox-content">
@@ -52,11 +53,11 @@
               <th width="25">
                 <input type="checkbox">
               </th>
-              <th>角色名称</th>
-              <th>角色描述</th>
+              <th>班级名称</th>
+              <th>所属年级</th>
+              <th>所属学校</th>
               <th>创建时间</th>
               <th>修改时间</th>
-              <th>操作</th>
             </tr>
             </thead>
           </table>
@@ -65,7 +66,7 @@
     </div>
   </div>
 </div>
-<script src="../../static/js/jquery-2.1.4.min.js"></script>
+<script src="../../static/js/jquery-1.8.3.min.js"></script>
 <script src="../../static/layer/layer.js"></script>
 <script src="../../static/datatables/js/jquery.dataTables.js"></script>
 <script src="../../static/datatables/js/dataTables.bootstrap.js"></script>
@@ -83,23 +84,17 @@
       "searching": false,
       "dom": 't<"bottom"iflpr<"clear">>',
       "ajax": {
-        "url": "/role/getRoleList",
+        "url": "/graClass/getClassList",
         "data": function (d) {
           d.roleName = $('#roleName').val();
         }
       },
       "columnDefs": [{
         "render": function (data, type, row) {
-          var buttons = '';
-          buttons += "<input type='checkbox' value='" + row.id + "' name='checkList'>";
-          return buttons;
+          return "<td><input type='checkbox' value='" + row[0] + "' name='checkList'></td>"
         },
         "targets": 0,
-      },{
-        "render": function (data, type, row) {
-            return "<button type='button' class='btn btn-primary btn-xs' onClick=\"role_resource('设置功能权限','/role/toRoleResourcesManager?roleId=" + row[0] + "','"+row[0]+"')\">功能授权</button>"
-        },
-        "targets": 5}],
+      }],
       "language": {
         "url": "../static/datatables/i18n/Chinese.json"
       }
