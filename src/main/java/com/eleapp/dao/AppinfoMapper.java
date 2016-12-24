@@ -61,4 +61,6 @@ public interface AppinfoMapper {
     List<Map> selectAllAppList(Map param);
 
     int updateAppStatus(@Param("status")String status,@Param("id")String id);
+
+    int setPerfact(@Param("appIds")String appIds,@Param("perfact")Integer perfact);
 }

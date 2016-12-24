@@ -47,8 +47,8 @@ public class DevolperConroller {
         return "devolper/app-add";
     }
     @RequestMapping("addApp")
-    public String addApp(Model model,Appinfo appinfo,MultipartFile bigImg,MultipartFile smallImg,HttpServletRequest request,HttpSession session){
-        appInfoService.insertSelective(appinfo,bigImg,smallImg,request,session);
+    public String addApp(Model model,Appinfo appinfo,MultipartFile bigImg,MultipartFile smallImg,HttpServletRequest request){
+        appInfoService.insertSelective(appinfo,bigImg,smallImg,request);
         model.addAttribute("AppKey", appinfo.getAppKey());
         model.addAttribute("Secret", (int)((Math.random()*9+1)*100000));
         return "devolper/success";

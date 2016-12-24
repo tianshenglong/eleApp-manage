@@ -34,12 +34,17 @@ public class AppInfoService {
     }
 
 
-    public int insertSelective(Appinfo record,MultipartFile bigImg,MultipartFile smallImg,HttpServletRequest request,HttpSession session){
+    public int insertSelective(Appinfo record,MultipartFile bigImg,MultipartFile smallImg,HttpServletRequest request){
 
-        String bigImgUrl = UploadUtil.uploadFile(bigImg, request, session);
-        String smallImgUrl = UploadUtil.uploadFile(smallImg,request,session);
+        String bigImgUrl = UploadUtil.uploadFile(bigImg, request);
+        String smallImgUrl = UploadUtil.uploadFile(smallImg,request);
         record.setImgBig(bigImgUrl);
         record.setImgSmall(smallImgUrl);
+
+        record.setStatus(0);
+        record.setCreateDate(new Date());
+        record.setUploadUserID(1); //上传人
+        record.setOperaterUserID("1"); //操作人
 
         record.setAppKey(UUID.randomUUID().toString());
         record.setCreateDate(new Date());
@@ -69,6 +74,10 @@ public class AppInfoService {
     }
 
     public int updateAppStatus(String status,String id){
-        return appinfoMapper.updateAppStatus(status,id);
+        return appinfoMapper.updateAppStatus(status, id);
+    }
+
+    public int setPerfact(String appIds,Integer perfact){
+        return appinfoMapper.setPerfact(appIds,perfact);
     }
 }

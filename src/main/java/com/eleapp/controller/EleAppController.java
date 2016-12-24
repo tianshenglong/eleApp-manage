@@ -2,8 +2,9 @@ package com.eleapp.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.eleapp.model.Appinfo;
-import com.eleapp.service.AppInfoService;
+import com.eleapp.model.*;
+import com.eleapp.service.*;
+import com.eleapp.util.UploadUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.base.Strings;
@@ -16,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +40,18 @@ public class EleAppController {
 
     @Autowired
     AppInfoService appInfoService;
+
+    @Autowired
+    AppImagesService appImagesService;
+
+    @Autowired
+    SchoolCaseImagesService schoolCaseImagesService;
+
+    @Autowired
+    AppTypeService appTypeService;
+
+    @Autowired
+    AppToTypeService appToTypeService;
 
     @RequestMapping("toAppList")
     public String toUserList(Model model){
@@ -93,8 +110,35 @@ public class EleAppController {
      */
     @RequestMapping("toAppAdd")
     public String toAppAdd(Model model){
+
+        List<EleApptype> allTypes= appTypeService.getALlTypes();
         model.addAttribute("closeOrnot",0);
+        model.addAttribute("allTypes",allTypes);
         return "app/app-add";
+    }
+
+    /**
+     * 跳转到上传应用图片页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("toUploadImgs")
+    public String toUploadImgs(Model model,String appId){
+        model.addAttribute("appId",appId);
+        model.addAttribute("closeOrnot",0);
+        return "app/uploadImgs";
+    }
+
+    /**
+     * 跳转到上传使用案例图片页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("toUploadCaseImgs")
+    public String toUploadCaseImgs(Model model,String appId){
+        model.addAttribute("appId",appId);
+        model.addAttribute("closeOrnot",0);
+        return "app/uploadCaseImgs";
     }
 
     /**
@@ -108,14 +152,17 @@ public class EleAppController {
      */
     @RequestMapping("/addApp")
     public String addApp(Model model, Appinfo eleApp,
-                          @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes,MultipartFile imgSmallFile,MultipartFile imgBigFile,HttpSession session) {
+                          @RequestParam Map param, HttpServletRequest request,RedirectAttributes redirectAttributes,MultipartFile imgSmallFile,MultipartFile imgBigFile) {
         try {
 
-            eleApp.setStatus(0);
-            eleApp.setCreateDate(new Date());
-            eleApp.setUploadUserID(1); //上传人
-            eleApp.setOperaterUserID("1"); //操作人
-            appInfoService.insertSelective(eleApp,imgBigFile,imgSmallFile,request,session);
+            EleApptotype eleApptotype = new EleApptotype();
+            appInfoService.insertSelective(eleApp,imgBigFile,imgSmallFile,request);
+
+            eleApptotype.setAppId(eleApp.getAutoID());
+            eleApptotype.setAppTypeId(Integer.parseInt(param.get("appTypeId").toString()));
+            eleApptotype.setCreateTime(new Date());
+            eleApptotype.setIsDel(1);
+            appToTypeService.insertSelective(eleApptotype);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,12 +177,97 @@ public class EleAppController {
     public Boolean updateAppStatus(String status,String id) {
         Boolean reStatus = false;
         try {
-            appInfoService.updateAppStatus(status,id);
+            appInfoService.updateAppStatus(status, id);
             reStatus = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return reStatus;
     }
+
+    @ResponseBody
+    @RequestMapping("/setPerfact")
+    public Boolean setPerfact(String appIds) {
+        Boolean reStatus = false;
+        try {
+            appInfoService.setPerfact(appIds.substring(0, appIds.length() - 1), 1);
+            reStatus = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return reStatus;
+    }
+
+    @ResponseBody
+    @RequestMapping("/uploadAppImgs")
+    public Map<String,Object> uploadAppImgs(HttpServletRequest request,String appId){
+        //创建一个通用的多部分解析器
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        //判断 request 是否有文件上传,即多部分请求
+        if(multipartResolver.isMultipart(request)){
+            //转换成多部分request
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+            // 取得request中的所有文件名
+            Iterator<String> iter = multiRequest.getFileNames();
+            while (iter.hasNext()) {
+                // 取得上传文件
+                MultipartFile file = multiRequest.getFile(iter.next());
+                // 数据封装操作 MultipartFile reqeust
+                // 取得当前上传文件的文 件名称<span style="white-space:pre"></span>; //这里需要你对文件的处理哦
+//              logger.debug("图片上传：{}", JsonUtil.toString(map));
+                String myFileName = file.getOriginalFilename();
+                try {
+                    String imgUrl = UploadUtil.uploadFile(file, request);
+                    EleAppImages aapImages = new EleAppImages();
+                    aapImages.setCreateTime(new Date());
+                    aapImages.setIsDel(1);
+                    aapImages.setAppId(Integer.parseInt(appId));
+                    aapImages.setImgUrl(imgUrl.substring(imgUrl.lastIndexOf(File.separator)+1,imgUrl.length()));
+                    appImagesService.insertSelective(aapImages);
+                    //photoAlbumService.insertWebPhotos(map);
+                } catch (Exception e) {
+                   // return Tools.retMap(Msg.bizMsgIntance(ErrInfo.PHOTO_WALL_UPLOAD_FAIL,ErrInfo.PHOTO_WALL_UPLOAD_FAIL_MSG));
+                }
+            }
+        }
+        return null;
+    }
+
+    @ResponseBody
+    @RequestMapping("/uploadCaseImgs")
+    public Map<String,Object> uploadCaseImgs(HttpServletRequest request,String appId){
+        //创建一个通用的多部分解析器
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        //判断 request 是否有文件上传,即多部分请求
+        if(multipartResolver.isMultipart(request)){
+            //转换成多部分request
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+            // 取得request中的所有文件名
+            Iterator<String> iter = multiRequest.getFileNames();
+            while (iter.hasNext()) {
+                // 取得上传文件
+                MultipartFile file = multiRequest.getFile(iter.next());
+                // 数据封装操作 MultipartFile reqeust
+                // 取得当前上传文件的文 件名称<span style="white-space:pre"></span>; //这里需要你对文件的处理哦
+//              logger.debug("图片上传：{}", JsonUtil.toString(map));
+                String myFileName = file.getOriginalFilename();
+                try {
+                    String imgUrl = UploadUtil.uploadFile(file, request);
+                    EleWebSchoolcase caseImages = new EleWebSchoolcase();
+                    caseImages.setCreateTime(new Date());
+                    caseImages.setIsDel(1);
+                    caseImages.setAppId(Integer.parseInt(appId));
+                    caseImages.setContect(imgUrl.substring(imgUrl.lastIndexOf(File.separator) + 1, imgUrl.length()));
+                    schoolCaseImagesService.insertSelective(caseImages);
+                    //photoAlbumService.insertWebPhotos(map);
+                } catch (Exception e) {
+                    // return Tools.retMap(Msg.bizMsgIntance(ErrInfo.PHOTO_WALL_UPLOAD_FAIL,ErrInfo.PHOTO_WALL_UPLOAD_FAIL_MSG));
+                }
+            }
+        }
+        return null;
+    }
+
+
 
 }

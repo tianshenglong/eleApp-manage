@@ -16,7 +16,7 @@ import java.io.IOException;
 @Component
 public class UploadUtil {
 
-    public static String uploadFile(MultipartFile file,HttpServletRequest request,HttpSession session){
+    public static String uploadFile(MultipartFile file,HttpServletRequest request){
         try {
             if (file!=null) {// 判断上传的文件是否为空
                 String path=null;// 文件路径
@@ -28,11 +28,11 @@ public class UploadUtil {
                 if (type!=null) {// 判断文件类型是否为空
                     if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())) {
                         // 项目在容器中实际发布运行的根路径
-                        String realPath=request.getSession().getServletContext().getRealPath("/uploadImg/");
+                        String realPath=request.getSession().getServletContext().getRealPath("/static/uploadImg/");
                         // 自定义的文件名称
                         String trueFileName=String.valueOf(System.currentTimeMillis())+fileName;
                         // 设置存放图片文件的路径
-                        path=realPath+/*System.getProperty("file.separator")+*/trueFileName;
+                        path=realPath+File.separator+trueFileName;
                         System.out.println("存放图片文件的路径:" + path);
                         // 转存文件到指定的路径
                         file.transferTo(new File(path));

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core_1_1" %>
 <%--
   Created by IntelliJ IDEA.
   User: 胜龙
@@ -48,9 +49,10 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">应用类型：</label>
                             <div class="col-sm-8">
-                                <select id="appType" name="appType" class="form-control">
-                                    <option value="1">益智</option>
-                                    <option value="2">射击</option>
+                                <select id="appTypeId" name="appTypeId" class="form-control">
+                                    <c:forEach var="cc" items="${allTypes}">
+                                        <option value="${cc.id}">${cc.name}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
