@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/eleApp-manage.iml" filepath="$PROJECT_DIR$/eleApp-manage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eleApp-manage_main.iml" filepath="$PROJECT_DIR$/.idea/modules/eleApp-manage_main.iml" group="eleApp-manage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eleApp-manage_test.iml" filepath="$PROJECT_DIR$/.idea/modules/eleApp-manage_test.iml" group="eleApp-manage" />
     </modules>
   </component>
 </project>

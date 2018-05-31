@@ -46,6 +46,16 @@ public class DevolperConroller {
         model.addAttribute("compId",eleCompany.getId());
         return "devolper/app-add";
     }
+
+    /**
+     * 提交测试
+     * @param model
+     * @param appinfo
+     * @param bigImg
+     * @param smallImg
+     * @param request
+     * @return
+     */
     @RequestMapping("addApp")
     public String addApp(Model model,Appinfo appinfo,MultipartFile bigImg,MultipartFile smallImg,HttpServletRequest request,HttpSession session){
         appInfoService.insertSelective(appinfo,bigImg,smallImg,request,session);
